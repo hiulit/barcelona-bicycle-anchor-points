@@ -165,7 +165,7 @@ L.Control.Select = L.Control.extend({
         for (i=0; i<radiusOptions.length; i++){
             var option = L.DomUtil.create('option', '', select)
             option.value = radiusOptions[i];
-            option.text = radiusOptions[i];
+            option.text = radiusOptions[i] + ' m';
         }
 
         L.DomEvent
