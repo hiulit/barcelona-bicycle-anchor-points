@@ -101,7 +101,8 @@ module.exports = function(grunt) {
                     '<%= config.src %>/{,*/,**/}*.styl'
                 ],
                 tasks: [
-                    'stylus'
+                    'stylus',
+                    'postcss'
                 ]
             },
             scripts: {
@@ -133,6 +134,19 @@ module.exports = function(grunt) {
                 files: {
                     '<%= config.dist %>/styles/main.css': '<%= config.src %>/styles/main.styl'
                 }
+            }
+        },
+        postcss: {
+            options: {
+                map: true, // inline sourcemaps
+                sourcesContent: true,
+                processors: [
+                    require('autoprefixer')({browsers: 'last 2 versions'}) // add vendor prefixes
+                    // require('autoprefixer')({browsers: ['> 0%', 'ie 8-10', 'Android >= 2.3']}) // add vendor prefixes
+                ]
+            },
+            dist: {
+                src: '<%= config.dist %>/styles/main.css'
             }
         },
         cssmin: {
@@ -169,6 +183,7 @@ module.exports = function(grunt) {
     grunt.registerTask('default', [
         'clean',
         'stylus',
+        'postcss',
         'concat',
         'copy',
         'connect:livereload',
@@ -183,6 +198,7 @@ module.exports = function(grunt) {
         grunt.task.run([
             'clean',
             'stylus',
+            'postcss',
             'cssmin',
             'concat',
             'uglify',
