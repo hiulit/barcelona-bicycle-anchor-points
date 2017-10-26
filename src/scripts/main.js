@@ -153,9 +153,12 @@ L.control.location({
 L.Control.Select = L.Control.extend({
     onAdd: function(map) {
         var container = L.DomUtil.create('div',
-                'leaflet-control-locate leaflet-bar leaflet-control');
+                'leaflet-control-radius-select leaflet-bar leaflet-control');
 
-        var select = L.DomUtil.create('select', 'leaflet-bar-part leaflet-bar-part-single', container);
+        var title = L.DomUtil.create('div', 'leaflet-control-radius-select__title', container);
+        title.textContent = 'Select radius';
+
+        var select = L.DomUtil.create('select', 'leaflet-control-radius-select__select', container);
         select.id = 'radius-select';
         select.name = 'radius-select';
 
