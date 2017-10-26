@@ -12,15 +12,20 @@
     "url": "git+https://github.com/hiulit/barcelona-bicycle-anchor-points.git"
   },
   "keywords": [
-    "public",
     "anchor",
-    "point",
     "barcelona",
-    "geolocation"
+    "bicycle",
+    "city",
+    "geolocation",
+    "leaflet",
+    "map",
+    "mobile",
+    "point",
+    "public"
   ],
   "author": [
     {
-      "name": "hiulit",
+      "name": "Xavier Gómez Gosálbez",
       "email": "hiulit@gmail.com",
       "url": "https://github.com/hiulit"
     }
