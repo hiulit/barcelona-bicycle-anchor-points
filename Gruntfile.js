@@ -25,6 +25,36 @@ module.exports = function(grunt) {
                 '<%= config.dist %>/'
             ]
         },
+        copy: {
+            dist: {
+                files: [
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: '<%= config.src %>/assets/',
+                        src: [
+                            '{,*/,**/}*.*',
+                            '!old/{,*/,**/}*.*'
+                        ],
+                        dest: '<%= config.dist %>/assets/'
+                    },
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: '<%= config.src %>/',
+                        src: ['{,*/,**/}*.html'],
+                        dest: '<%= config.dist %>/'
+                    },
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: 'node_modules/leaflet/dist/images/',
+                        src: ['{,*/,**/}*.*'],
+                        dest: '<%= config.dist %>/styles/images/'
+                    }
+                ]
+            }
+        },
         connect: {
             options: {
                 port: grunt.option('port') || SERVER_PORT,
@@ -36,7 +66,7 @@ module.exports = function(grunt) {
             livereload: {
                 options: {
                     //keepalive: true,
-                    // base: [config.src],
+                    base: [config.dist],
                     open: {
                         target: 'http://localhost:<%= connect.options.port %>'
                     }
@@ -57,14 +87,15 @@ module.exports = function(grunt) {
                 spawn: false,
                 livereload: LIVERELOAD_PORT
             },
-            // assets: {
-            //     files: [
-            //         '<%= config.src %>/assets/{,*/,**/}*.*'
-            //     ],
-            //     tasks: [
-            //         'copy'
-            //     ]
-            // },
+            assets: {
+                files: [
+                    '<%= config.src %>/assets/{,*/,**/}*.*',
+                    '<%= config.src %>/{,*/,**/}*.html'
+                ],
+                tasks: [
+                    'copy'
+                ]
+            },
             styles: {
                 files: [
                     '<%= config.src %>/{,*/,**/}*.styl'
@@ -72,15 +103,23 @@ module.exports = function(grunt) {
                 tasks: [
                     'stylus'
                 ]
+            },
+            scripts: {
+                files: [
+                    '<%= config.src %>/{,*/,**/}*.js',
+                    '!<%= config.src %>/scripts/unusedFunctions.js'
+                ],
+                tasks: [
+                    'concat'
+                ]
             }
-            // scripts: {
-            //     files: [
-            //         '<%= config.src %>/{,*/,**/}*.js'
-            //     ],
-            //     tasks: [
-            //         'concat'
-            //     ]
-            // }
+        },
+        uglify: {
+            dist: {
+                files: {
+                '<%= config.dist %>/scripts/main.js': ['<%= config.dist %>/scripts/main.js']
+                }
+            }
         },
         stylus: {
             dist: {
@@ -92,8 +131,37 @@ module.exports = function(grunt) {
                     compress: false
                 },
                 files: {
-                    '<%= config.src %>/styles/main.css': '<%= config.src %>/styles/main.styl'
+                    '<%= config.dist %>/styles/main.css': '<%= config.src %>/styles/main.styl'
                 }
+            }
+        },
+        cssmin: {
+            options: {
+                sourceMap: false
+            },
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= config.dist %>/styles/',
+                    src: ['{,*/,**/}*.css'],
+                    dest: '<%= config.dist %>/styles/',
+                    ext: '.css'
+                }]
+            }
+        },
+        concat: {
+            options: {
+                separator: ';',
+            },
+            dist: {
+                src: [
+                    'node_modules/leaflet/dist/leaflet.js',
+                    'node_modules/proj4/dist/proj4.js',
+                    'node_modules/proj4leaflet/src/proj4leaflet.js',
+                    '<%= config.src %>/scripts/{,*/,**/}*.js',
+                    '!<%= config.src %>/scripts/unusedFunctions.js'
+                ],
+                dest: '<%= config.dist %>/scripts/main.js'
             }
         }
     });
@@ -101,10 +169,8 @@ module.exports = function(grunt) {
     grunt.registerTask('default', [
         'clean',
         'stylus',
-        // 'json_bake',
-        // 'bake',
-        // 'concat',
-        // 'copy',
+        'concat',
+        'copy',
         'connect:livereload',
         'watch'
     ]);
@@ -117,18 +183,10 @@ module.exports = function(grunt) {
         grunt.task.run([
             'clean',
             'stylus',
-            // 'json_bake',
-            // 'bake',
-            // 'obfuscator',
-            // 'concat',
-            // 'copy',
-            // 'critical',
-            // 'cssmin',
-            // 'htmlmin',
-            // 'sitemaps',
-            // 'image',
-            'connect:livereload',
-            'watch'
+            'cssmin',
+            'concat',
+            'uglify',
+            'copy',
         ]);
     });
 };
