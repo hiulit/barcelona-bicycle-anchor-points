@@ -1,16 +1,129 @@
-var markersLayer = new L.LayerGroup();
-var myLocation = new L.latLng(41.386664, 2.1675844);
-var myLocationCircle = new L.circle();
-var myLocationMarker = new L.marker();
-var radiusCircle = new L.circle();
+var mapHelper = {
+    loading: {
+        el: document.getElementById('loading'),
+        show: function() {
+            this.el.classList.add('is-showing')
+        },
+        hide: function() {
+            this.el.classList.remove('is-showing')
+        }
+    },
+    initialPosition: new L.latLng(41.386664, 2.1675844),
+    markersLayer: new L.LayerGroup(),
+    radiusCircle: new L.circle(),
+    radiusOptions: [100, 200, 300],
+    userPosition: new L.latLng(41.386664, 2.1675844),
+    userPositionCircle: new L.circle(),
+    userPositionMarker: new L.marker(),
+    userRadius: null,
+    getUserLocation: function() {
+        if (!navigator.geolocation) {
+            alert('Geolocation is not available');
+        } else {
+            mapHelper.clearAllLayers();
+            mapHelper.loading.show();
+            map.locate({
+                maxZoom: 16,
+                setView: true
+            });
+        }
+    },
+    onLocationFound: function(e) {
+        mapHelper.userPosition = new L.latLng(e.latlng.lat, e.latlng.lng);
+        mapHelper.userRadius = Math.round(e.accuracy / 2);
+        mapHelper.loading.hide();
+        mapHelper.addRadiusAndMarkers();
+    },
+    onLocationError: function(e) {
+        mapHelper.loading.hide();
+        alert(e.message);
+    },
+    getSelectedRadius: function() {
+        var radiusSelect = document.getElementById('radius-select');
+        var radius = radiusSelect[radiusSelect.selectedIndex].value;
+        return radius;
+    },
+    addRadiusAndMarkers: function() {
+        mapHelper.clearAllLayers();
+        mapHelper.addUserPositionMarker();
+        mapHelper.addUserPositionCircle();
+        mapHelper.addRadiusMarkers();
+        mapHelper.addRadiusCircle();
+        mapHelper.markersLayer.addTo(map);
+    },
+    addUserPositionMarker: function() {
+        mapHelper.userPositionMarker
+            .setLatLng(mapHelper.userPosition)
+            .bindPopup("You are within " + mapHelper.userRadius + " meters from this point")
+            .openPopup()
+        .addTo(mapHelper.markersLayer);
+    },
+    addUserPositionCircle: function() {
+        mapHelper.userPositionCircle
+            .setLatLng(mapHelper.userPosition)
+            .setRadius(mapHelper.userRadius)
+        .addTo(mapHelper.markersLayer);
+    },
+    addRadiusMarkers: function() {
+        apiHelper.getNearestAnchors(mapHelper.getSelectedRadius());
+    },
+    addRadiusCircle: function() {
+        mapHelper.radiusCircle
+            .setLatLng(mapHelper.userPosition)
+            .setRadius(mapHelper.getSelectedRadius())
+            .setStyle({
+                fillOpacity: 0.4,
+                opacity: 1,
+                weight: 1
+        }).addTo(mapHelper.markersLayer);
+    },
+    clearAllLayers: function() {
+        mapHelper.markersLayer.clearLayers();
+        // map.removeLayer(myLocationCircle);
+        // map.removeLayer(myLocationMarker);
+        // map.removeLayer(radiusCircle);
+    }
+}
 
-var radiusOptions = [
-    100,
-    200,
-    300
-]
-
-var loading = document.getElementById('loading');
+var apiHelper = {
+    getFeatureProperties: function(property) {
+        var array = [];
+        for (var i=0; i<geojson.features.length; i++) {
+            if (array.indexOf(geojson.features[i].properties[property]) == -1) {
+                array.push(geojson.features[i].properties[property]);
+            }
+        }
+        return array;
+    },
+    getAnchorByFeatureProperty: function(property, name) {
+        mapHelper.markersLayer.clearLayers();
+        L.Proj.geoJson(geojson, {
+            pointToLayer: function(geoJsonPoint, latlng) {
+                return L.marker(latlng);
+            },
+            filter: function(geoJsonFeature) {
+                return geoJsonFeature.properties[property] == name;
+            },
+            onEachFeature: mapHelper.onEachFeature
+        }).addTo(mapHelper.markersLayer);
+        mapHelper.markersLayer.addTo(map);
+    },
+    getNearestAnchors: function(radius) {
+        L.Proj.geoJson(geojson, {
+            pointToLayer: function(geoJsonPoint, latlng) {
+                if (mapHelper.userPosition.distanceTo(latlng) < radius) {
+                    return L.marker(latlng);
+                }
+            },
+            onEachFeature: apiHelper.onEachFeature
+        }).addTo(mapHelper.markersLayer);
+    },
+    onEachFeature: function(feature, layer) {
+        if (feature.properties && feature.properties.NOM_EQUIP) {
+            layer.bindPopup(feature.properties.NOM_EQUIP);
+        }
+    }
+}
 
 var tileLayerUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
 
@@ -27,89 +140,12 @@ var tileLayerInstance = new L.tileLayer(tileLayerUrl, {
 
 var map = L.map('map', {
     layers: [tileLayerInstance]
-}).setView(myLocation, 12);
-
-function onLocationFound(e) {
-    var myLocationRadius = Math.round(e.accuracy / 2);
-    myLocation = e.latlng;
-
-    loading.classList.remove('is-showing');
-
-    myLocationMarker
-        .setLatLng(myLocation)
-        .bindPopup("You are within " + myLocationRadius + " meters from this point")
-        .openPopup()
-    .addTo(map);
-
-    myLocationCircle
-        .setLatLng(myLocation)
-        .setRadius(myLocationRadius)
-    .addTo(map);
-
-    getSelectedRadius();
-}
-
-function onLocationError(e) {
-    loading.classList.remove('is-showing');
-    alert(e.message);
-}
-
-function onEachFeature(feature, layer) {
-    if (feature.properties && feature.properties.NOM_EQUIP) {
-        layer.bindPopup(feature.properties.NOM_EQUIP);
-    }
-}
-
-function getSelectedRadius() {
-    var radiusSelect = document.getElementById('radius-select');
-    var radius = radiusSelect[radiusSelect.selectedIndex].value;
-    applyRadius(radius);
-}
-
-function applyRadius(radius) {
-    markersLayer.clearLayers();
-
-    radiusCircle
-        .setLatLng(myLocation)
-        .setRadius(radius)
-        .setStyle({
-            // color: '#000000',
-            fillOpacity: 0.4,
-            opacity: 1,
-            weight: 1
-    }).addTo(markersLayer);
-
-    L.Proj.geoJson(geojson, {
-        pointToLayer: function(geoJsonPoint, latlng) {
-            if (myLocation.distanceTo(latlng) < radius) {
-                return L.marker(latlng);
-            }
-        },
-        // filter: function(geoJsonFeature) {
-        //     return geoJsonFeature.properties.DIST == "Gràcia";
-        // },
-        onEachFeature: onEachFeature
-    }).addTo(markersLayer);
-
-    markersLayer.addTo(map);
-}
-
-function getMyLocation() {
-    markersLayer.clearLayers();
-    map.removeLayer(myLocationCircle);
-    map.removeLayer(myLocationMarker);
-    map.removeLayer(radiusCircle);
-    loading.classList.add('is-showing');
-    map.locate({
-        maxZoom: 16,
-        setView: true
-    });
-}
+}).setView(mapHelper.userPosition, 12);
 
 proj4.defs("EPSG:25831", "+proj=utm +zone=31 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
 
-map.on('locationfound', onLocationFound);
-map.on('locationerror', onLocationError);
+map.on('locationfound', mapHelper.onLocationFound);
+map.on('locationerror', mapHelper.onLocationError);
 
 // Creates location button.
 L.Control.Location = L.Control.extend({
@@ -131,7 +167,7 @@ L.Control.Location = L.Control.extend({
 
         L.DomEvent
             .addListener(container, 'click', L.DomEvent.stop)
-            .addListener(container, 'click', getMyLocation)
+            .addListener(container, 'click', mapHelper.getUserLocation)
         L.DomEvent.disableClickPropagation(container);
 
         return container;
@@ -162,15 +198,15 @@ L.Control.Select = L.Control.extend({
         select.id = 'radius-select';
         select.name = 'radius-select';
 
-        for (i=0; i<radiusOptions.length; i++){
+        for (i=0; i<mapHelper.radiusOptions.length; i++){
             var option = L.DomUtil.create('option', '', select)
-            option.value = radiusOptions[i];
-            option.text = radiusOptions[i] + ' m';
+            option.value = mapHelper.radiusOptions[i];
+            option.text = mapHelper.radiusOptions[i] + ' m';
         }
 
         L.DomEvent
             .addListener(select, 'change', L.DomEvent.stop)
-            .addListener(select, 'change', getSelectedRadius);
+            .addListener(select, 'change', mapHelper.addRadiusAndMarkers);
         L.DomEvent.disableClickPropagation(container);
 
         return container;
