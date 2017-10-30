@@ -6,17 +6,26 @@ Find public bicycle anchor points near you in Barcelona!
 
 ### mapHelper
 
-* [mapHelper.initialPosition](#initialposition)
-* [mapHelper.loading.hide()](#)
-* [mapHelper.loading.show()](#)
-* [mapHelper.markersLayer](#markerslayer)
-* [mapHelper.radiusCircle](#radiuscircle)
-* [mapHelper.radiusOptions](#radiusoptions)
-* [mapHelper.userPosition](#userposition)
-* [mapHelper.userPositionCircle](#userpositioncircle)
-* [mapHelper.userPositionMarker](#userpositionmarker)
-* [mapHelper.userRadius](#userradius)
-* [mapHelper.getUserLocation()](#getuserlocation)
+* [initialPosition](#initialposition)
+* [loading.hide()](#loadingshow)
+* [loading.show()](#loadinghide)
+* [markersLayer](#markerslayer)
+* [radiusCircle](#radiuscircle)
+* [radiusOptions](#radiusoptions)
+* [userPosition](#userposition)
+* [userPositionCircle](#userpositioncircle)
+* [userPositionMarker](#userpositionmarker)
+* [userRadius](#userradius)
+* [addRadiusAndMarkers()](#addradiusandmarkers)
+* [addRadiusCircle()](#addradiuscircle)
+* [addRadiusMarkers()](#addradiusmarkers)
+* [addUserPositionCircle()](#adduserpositioncircle)
+* [addUserPositionMarker()](#adduserpositionmarker)
+* [clearAllLayers()](#clearalllayers)
+* [getSelectedRadius()](#getselectedradius)
+* [getUserLocation()](#getuserlocation)
+* [onLocationError()](#onlocationerror)
+* [onLocationFound()](#onlocationfound)
 
 #### initialPosition
 
@@ -70,11 +79,11 @@ Gets the user's radius when [location is found](#onlocationfound).
 
 Finds user's location and centers the map.
 
-#### onLocationFound(e)
+#### onLocationFound()
 
 Gets user's position and radius and shows it on the map.
 
-#### onLocationError(e)
+#### onLocationError()
 
 Shows an alert when position is not found or user's denies using geolocation.
 
