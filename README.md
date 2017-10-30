@@ -4,6 +4,9 @@ Find public bicycle anchor points near you in Barcelona!
 
 ## API
 
+* [mapHelper](#maphelper)
+* [apiHelper](#apihelper)
+
 ### mapHelper
 
 * [initialPosition](#initialposition)
@@ -41,11 +44,11 @@ Shows loading animation.
 
 Hides loading animation.
 
-### markersLayer
+#### markersLayer
 
 `new L.LayerGroup()`
 
-### radiusCircle
+#### radiusCircle
 
 `new L.circle()`
 
