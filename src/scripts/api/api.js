@@ -163,6 +163,7 @@ var apiHelper = {
             console.log('This function needs the user\'s position and a radius!');
             return
         }
+        position = new L.latLng(position);
         apiHelper.getJSON(apiHelper.url, function(data){
             var array = [];
             // mapHelper.clearAllLayers();
