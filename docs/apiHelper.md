@@ -64,7 +64,7 @@ Returns a `Array` with `LatLng` objects from a given feature property key and fe
 
 ### Example
 
-`getAnchorByFeatureProperty('DIST', 'Gràcia')`
+`apiHelper.getAnchorByFeatureProperty('DIST', 'Gràcia')`
 
 ## getNearestAnchors(position, radius)
 
