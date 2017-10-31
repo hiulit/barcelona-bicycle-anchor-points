@@ -19,7 +19,7 @@ Returns an `Array` with all the features properties' keys.
 
 | Type | Description |
 | --- | --- |
-|`Array` | All the features properties' keys |
+| `Array` | All the features properties' keys |
 
 ### Example
 
@@ -39,7 +39,7 @@ Returns an `Array` with all the values from a given feature property key.
 
 | Type | Description |
 | --- | --- |
-|`Array` | Values from a given feature property key |
+| `Array` | Values from a given feature property key |
 
 ### Example
 
@@ -47,7 +47,7 @@ Returns an `Array` with all the values from a given feature property key.
 
 ## getAnchorByFeatureProperty(key, value)
 
-Returns a `Array` with `LatLng Objects` from a given feature property key and feature property value.
+Returns a `Array` with `LatLng` objects from a given feature property key and feature property value.
 
 ### Parameters
 
@@ -60,7 +60,7 @@ Returns a `Array` with `LatLng Objects` from a given feature property key and fe
 
 | Type | Description |
 | --- | --- |
-|`Array` | `LatLng Objects`: `{ lat: Number, lng: Number }` |
+| `Array` | `LatLng` objects: `{ lat: Number, lng: Number }` |
 
 ### Example
 
@@ -68,20 +68,20 @@ Returns a `Array` with `LatLng Objects` from a given feature property key and fe
 
 ## getNearestAnchors(position, radius)
 
-Returns a `Array` with `LatLng Objects` from a given position and a radius.
+Returns a `Array` with `LatLng` objects from a given position and a radius.
 
 ### Parameters
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `position` |`LatLng Object` | The position to be used as the center point |
+| `position` | `LatLng` object | The position to be used as the center point |
 | `radius` | `Number` | The radius in meters |
 
 ### Output
 
 | Type | Description |
 | --- | --- |
-|`Array` | `LatLng Objects`: `{lat: Number, lng: Number}` |
+| `Array` | `LatLng` objects: `{lat: Number, lng: Number}` |
 
 ### Example
 
