@@ -48,6 +48,29 @@ module.exports = function(grunt) {
                         dest: '<%= config.tmp %>/styles/images/'
                     }
                 ]
+            },
+            dist: {
+                files: [
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: '<%= config.src %>/',
+                        src: [
+                            'assets/{,*/,**/}*.*',
+                            'data/{,*/,**/}*.json',
+                            '{,*/,**/}*.html'
+                            // '!old/{,*/,**/}*.*'
+                        ],
+                        dest: '<%= config.dist %>/'
+                    },
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: 'node_modules/leaflet/dist/images/',
+                        src: ['{,*/,**/}*.*'],
+                        dest: '<%= config.dist %>/styles/images/'
+                    }
+                ]
             }
         },
         connect: {
@@ -116,6 +139,11 @@ module.exports = function(grunt) {
                 files: {
                 '<%= config.tmp %>/scripts/main.js': ['<%= config.tmp %>/scripts/main.js']
                 }
+            },
+            dist: {
+                files: {
+                '<%= config.dist %>/scripts/main.js': ['<%= config.dist %>/scripts/main.js']
+                }
             }
         },
         stylus: {
@@ -130,6 +158,11 @@ module.exports = function(grunt) {
                 files: {
                     '<%= config.tmp %>/styles/main.css': '<%= config.src %>/styles/main.styl'
                 }
+            },
+            dist: {
+                files: {
+                    '<%= config.dist %>/styles/main.css': '<%= config.src %>/styles/main.styl'
+                }
             }
         },
         postcss: {
@@ -143,6 +176,9 @@ module.exports = function(grunt) {
             },
             tmp: {
                 src: '<%= config.tmp %>/styles/main.css'
+            },
+            dist: {
+                src: '<%= config.dist %>/styles/main.css'
             }
         },
         cssmin: {
@@ -155,6 +191,15 @@ module.exports = function(grunt) {
                     cwd: '<%= config.tmp %>/styles/',
                     src: ['{,*/,**/}*.css'],
                     dest: '<%= config.tmp %>/styles/',
+                    ext: '.css'
+                }]
+            },
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= config.dist %>/styles/',
+                    src: ['{,*/,**/}*.css'],
+                    dest: '<%= config.dist %>/styles/',
                     ext: '.css'
                 }]
             }
@@ -173,16 +218,27 @@ module.exports = function(grunt) {
                     // '!<%= config.src %>/scripts/unusedFunctions.js'
                 ],
                 dest: '<%= config.tmp %>/scripts/main.js'
+            },
+            dist: {
+                src: [
+                    'node_modules/leaflet/dist/leaflet.js',
+                    'node_modules/proj4/dist/proj4.js',
+                    'node_modules/proj4leaflet/src/proj4leaflet.js',
+                    '<%= config.src %>/scripts/api/api.js',
+                    '<%= config.src %>/scripts/main.js'
+                    // '!<%= config.src %>/scripts/unusedFunctions.js'
+                ],
+                dest: '<%= config.dist %>/scripts/main.js'
             }
         }
     });
 
     grunt.registerTask('default', [
         'clean',
-        'stylus',
-        'postcss',
-        'concat',
-        'copy',
+        'stylus:tmp',
+        'postcss:tmp',
+        'concat:tmp',
+        'copy:tmp',
         'connect:livereload',
         'watch'
     ]);
@@ -194,12 +250,12 @@ module.exports = function(grunt) {
 
         grunt.task.run([
             'clean',
-            'stylus',
-            'postcss',
-            'cssmin',
-            'concat',
-            'uglify',
-            'copy',
+            'stylus:dist',
+            'postcss:dist',
+            'cssmin:dist',
+            'concat:dist',
+            'uglify:dist',
+            'copy:dist',
         ]);
     });
 };
