@@ -26,31 +26,26 @@ module.exports = function(grunt) {
             ]
         },
         copy: {
-            dist: {
+            tmp: {
                 files: [
                     {
                         expand: true,
                         dot: true,
-                        cwd: '<%= config.src %>/assets/',
-                        src: [
-                            '{,*/,**/}*.*',
-                            '!old/{,*/,**/}*.*'
-                        ],
-                        dest: '<%= config.dist %>/assets/'
-                    },
-                    {
-                        expand: true,
-                        dot: true,
                         cwd: '<%= config.src %>/',
-                        src: ['{,*/,**/}*.html'],
-                        dest: '<%= config.dist %>/'
+                        src: [
+                            'assets/{,*/,**/}*.*',
+                            'data/{,*/,**/}*.json',
+                            '{,*/,**/}*.html'
+                            // '!old/{,*/,**/}*.*'
+                        ],
+                        dest: '<%= config.tmp %>/'
                     },
                     {
                         expand: true,
                         dot: true,
                         cwd: 'node_modules/leaflet/dist/images/',
                         src: ['{,*/,**/}*.*'],
-                        dest: '<%= config.dist %>/styles/images/'
+                        dest: '<%= config.tmp %>/styles/images/'
                     }
                 ]
             }
@@ -66,13 +61,13 @@ module.exports = function(grunt) {
             livereload: {
                 options: {
                     //keepalive: true,
-                    base: [config.dist],
+                    base: [config.tmp],
                     open: {
                         target: 'http://localhost:<%= connect.options.port %>'
                     }
                 }
             },
-            dist: {
+            tmp: {
                 options: {
                     middleware: function (connect) {
                         return [
@@ -90,6 +85,7 @@ module.exports = function(grunt) {
             assets: {
                 files: [
                     '<%= config.src %>/assets/{,*/,**/}*.*',
+                    '<%= config.src %>/data/{,*/,**/}*.json',
                     '<%= config.src %>/{,*/,**/}*.html'
                 ],
                 tasks: [
@@ -107,8 +103,8 @@ module.exports = function(grunt) {
             },
             scripts: {
                 files: [
-                    '<%= config.src %>/{,*/,**/}*.js',
-                    '!<%= config.src %>/scripts/unusedFunctions.js'
+                    '<%= config.src %>/{,*/,**/}*.js'
+                    // '!<%= config.src %>/scripts/unusedFunctions.js'
                 ],
                 tasks: [
                     'concat'
@@ -116,23 +112,23 @@ module.exports = function(grunt) {
             }
         },
         uglify: {
-            dist: {
+            tmp: {
                 files: {
-                '<%= config.dist %>/scripts/main.js': ['<%= config.dist %>/scripts/main.js']
+                '<%= config.tmp %>/scripts/main.js': ['<%= config.tmp %>/scripts/main.js']
                 }
             }
         },
         stylus: {
-            dist: {
-                options: {
-                    sourcemap: {
-                        inline: true
-                    },
-                    'include css': true,
-                    compress: false
+            options: {
+                sourcemap: {
+                    inline: true
                 },
+                'include css': true,
+                compress: false
+            },
+            tmp: {
                 files: {
-                    '<%= config.dist %>/styles/main.css': '<%= config.src %>/styles/main.styl'
+                    '<%= config.tmp %>/styles/main.css': '<%= config.src %>/styles/main.styl'
                 }
             }
         },
@@ -145,20 +141,20 @@ module.exports = function(grunt) {
                     // require('autoprefixer')({browsers: ['> 0%', 'ie 8-10', 'Android >= 2.3']}) // add vendor prefixes
                 ]
             },
-            dist: {
-                src: '<%= config.dist %>/styles/main.css'
+            tmp: {
+                src: '<%= config.tmp %>/styles/main.css'
             }
         },
         cssmin: {
             options: {
                 sourceMap: false
             },
-            dist: {
+            tmp: {
                 files: [{
                     expand: true,
-                    cwd: '<%= config.dist %>/styles/',
+                    cwd: '<%= config.tmp %>/styles/',
                     src: ['{,*/,**/}*.css'],
-                    dest: '<%= config.dist %>/styles/',
+                    dest: '<%= config.tmp %>/styles/',
                     ext: '.css'
                 }]
             }
@@ -167,16 +163,16 @@ module.exports = function(grunt) {
             options: {
                 separator: ';',
             },
-            dist: {
+            tmp: {
                 src: [
                     'node_modules/leaflet/dist/leaflet.js',
                     'node_modules/proj4/dist/proj4.js',
                     'node_modules/proj4leaflet/src/proj4leaflet.js',
-                    '<%= config.src %>/api/api.js',
-                    '<%= config.src %>/scripts/{,*/,**/}*.js',
-                    '!<%= config.src %>/scripts/unusedFunctions.js'
+                    '<%= config.src %>/scripts/api/api.js',
+                    '<%= config.src %>/scripts/main.js'
+                    // '!<%= config.src %>/scripts/unusedFunctions.js'
                 ],
-                dest: '<%= config.dist %>/scripts/main.js'
+                dest: '<%= config.tmp %>/scripts/main.js'
             }
         }
     });

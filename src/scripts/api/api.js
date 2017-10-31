@@ -94,7 +94,7 @@ var mapHelper = {
 }
 
 var apiHelper = {
-    url: '../assets/bcn-bike-anchors-pretty.json',
+    url: './data/barcelona-bicycle-anchors.json',
     getJSON: function(url, callback) {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", url, true);
@@ -113,7 +113,7 @@ var apiHelper = {
         };
         xhr.send(null);
     },
-    getFeatureProperties: function() {
+    getFeaturesProperties: function() {
         apiHelper.getJSON(apiHelper.url, function(data){
             var array = [];
             for (var i=0; i<data.features.length; i++) {
@@ -128,19 +128,19 @@ var apiHelper = {
             return array;
         });
     },
-    getFeatureProperty: function(property) {
+    getFeatureProperty: function(key) {
         apiHelper.getJSON(apiHelper.url, function(data){
             var array = [];
             for (var i=0; i<data.features.length; i++) {
-                if (array.indexOf(data.features[i].properties[property]) == -1) {
-                    array.push(data.features[i].properties[property]);
+                if (array.indexOf(data.features[i].properties[key]) == -1) {
+                    array.push(data.features[i].properties[key]);
                 }
             }
             console.log(array);
             return array;
         });
     },
-    getAnchorByFeatureProperty: function(property, value) {
+    getAnchorByFeatureProperty: function(key, value) {
         apiHelper.getJSON(apiHelper.url, function(data){
             var array = [];
             mapHelper.clearAllLayers();
@@ -150,7 +150,7 @@ var apiHelper = {
                     return L.marker(latlng);
                 },
                 filter: function(geoJsonFeature) {
-                    return geoJsonFeature.properties[property] == value;
+                    return geoJsonFeature.properties[key] == value;
                 },
                 onEachFeature: apiHelper.onEachFeature
             }).addTo(mapHelper.markersLayer);
@@ -165,7 +165,7 @@ var apiHelper = {
         }
         apiHelper.getJSON(apiHelper.url, function(data){
             var array = [];
-            mapHelper.clearAllLayers();
+            // mapHelper.clearAllLayers();
             L.Proj.geoJson(data, {
                 pointToLayer: function(geoJsonPoint, latlng) {
                     if (position.distanceTo(latlng) < radius) {
