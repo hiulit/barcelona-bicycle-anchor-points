@@ -7,7 +7,7 @@ var defaults = {
 }
 
 var mapHelper = {
-    initialPosition: new L.latLng(41.386664, 2.1675844),
+    initialPosition: new L.latLng(defaults.position),
     loading: {
         el: document.getElementById('loading'),
         show: function() {
@@ -20,7 +20,7 @@ var mapHelper = {
     markersLayer: new L.LayerGroup(),
     radiusCircle: new L.circle(),
     radiusOptions: [100, 200, 300],
-    userPosition: new L.latLng(41.386664, 2.1675844),
+    userPosition: new L.latLng(defaults.position),
     userPositionCircle: new L.circle(),
     userPositionMarker: new L.marker(),
     userRadius: defaults.radius,
@@ -82,6 +82,8 @@ var mapHelper = {
         }
     },
     onLocationFound: function(e) {
+        console.log(mapHelper.userPosition);
+        console.log(mapHelper.userRadius);
         mapHelper.userPosition = new L.latLng(e.latlng.lat, e.latlng.lng);
         mapHelper.userRadius = Math.round(e.accuracy / 2);
         mapHelper.loading.hide();
