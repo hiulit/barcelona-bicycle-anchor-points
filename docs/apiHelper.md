@@ -1,9 +1,9 @@
 # apiHelper
 
 * [getFeaturesProperties()](#getfeaturesproperties)
-* [getFeatureProperty()](#getfeatureproperty)
-* [getAnchorByFeatureProperty()](#getanchorbyfeatureproperty)
-* [getNearestAnchors()](#getnearestanchors)
+* [getFeatureProperty(key)](#getfeaturepropertykey)
+* [getAnchorByFeatureProperty(key, value)](#getanchorbyfeaturepropertykey-value)
+* [getNearestAnchors(position, radius)](#getnearestanchorsposition-radius)
 
 ## getFeaturesProperties()
 
