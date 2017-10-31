@@ -1,7 +1,8 @@
 'use strict';
 
 var LIVERELOAD_PORT = 35730;
-var SERVER_PORT = 9001;
+var TMP_PORT = 9001;
+var DIST_PORT = 9002;
 
 module.exports = function(grunt) {
     var target = grunt.option('target') || '';
@@ -16,8 +17,10 @@ module.exports = function(grunt) {
     grunt.initConfig({
         config: config,
         clean: {
+            tmp: [
+                '<%= config.tmp %>/'
+            ],
             dist: [
-                '<%= config.tmp %>/',
                 '<%= config.dist %>/'
             ]
         },
@@ -71,7 +74,7 @@ module.exports = function(grunt) {
         },
         connect: {
             options: {
-                port: grunt.option('port') || SERVER_PORT,
+                // port: grunt.option('port') || SERVER_PORT,
                 // change this to '0.0.0.0' to access the server from outside
                 // hostname: 'localhost',
                 hostname: '0.0.0.0',
@@ -80,18 +83,20 @@ module.exports = function(grunt) {
             tmp: {
                 options: {
                     //keepalive: true,
+                    port: grunt.option('port') || TMP_PORT,
                     base: [config.tmp],
                     open: {
-                        target: 'http://localhost:<%= connect.options.port %>'
+                        target: 'http://localhost:<%= connect.tmp.options.port %>'
                     }
                 }
             },
             dist: {
                 options: {
                     keepalive: true,
+                    port: grunt.option('port') || DIST_PORT,
                     base: [config.dist],
                     open: {
-                        target: 'http://localhost:<%= connect.options.port %>'
+                        target: 'http://localhost:<%= connect.dist.options.port %>'
                     }
                 }
             }
@@ -226,26 +231,75 @@ module.exports = function(grunt) {
                 ],
                 dest: '<%= config.dist %>/scripts/main.js'
             }
+        },
+        prompt: {
+            target: {
+                options: {
+                    questions: [
+                        {
+                            config: 'what-to-do',
+                            type: 'list', // list, checkbox, confirm, input, password
+                            message: 'What do you want to do?',
+                            default: 'local', // default value if nothing is entered
+                            choices: [
+                                {
+                                    name: 'Develop in a localhost server [> grunt local]',
+                                    value: 'local'
+                                },
+                                {
+                                    name: 'Build for deployment [> grunt build]',
+                                    value: 'build'
+                                },
+                                {
+                                    name: 'Build for deployment and start a localhost server [> grunt build-connect]',
+                                    value: 'build-connect'
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
         }
     });
 
-    grunt.registerTask('default', [
-        'clean',
-        'stylus:tmp',
-        'postcss:tmp',
-        'concat:tmp',
-        'copy:tmp',
-        'connect:tmp',
-        'watch'
-    ]);
+    grunt.registerTask('tasks', function () {
+        grunt.task.run([
+            'prompt',
+            'what-to-do'
+        ]);
+    });
 
-    grunt.registerTask('build', function (target) {
+    grunt.registerTask('what-to-do', function (a, b) {
+        grunt.task.run([grunt.config('what-to-do')]);
+    });
+
+    grunt.registerTask('default', function(target) {
+        grunt.task.run(['tasks']);
+    });
+
+    grunt.registerTask('local', function (target) {
         if (typeof target === 'undefined') {
-            target = 'dev';
+            target = 'local';
         }
 
         grunt.task.run([
-            'clean',
+            'clean:tmp',
+            'stylus:tmp',
+            'postcss:tmp',
+            'concat:tmp',
+            'copy:tmp',
+            'connect:tmp',
+            'watch'
+        ]);
+    });
+
+    grunt.registerTask('build', function (target) {
+        if (typeof target === 'undefined') {
+            target = 'build';
+        }
+
+        grunt.task.run([
+            'clean:dist',
             'stylus:dist',
             'postcss:dist',
             'cssmin:dist',
@@ -257,11 +311,11 @@ module.exports = function(grunt) {
 
     grunt.registerTask('build-connect', function (target) {
         if (typeof target === 'undefined') {
-            target = 'dev';
+            target = 'build-connect';
         }
 
         grunt.task.run([
-            'clean',
+            'clean:dist',
             'stylus:dist',
             'postcss:dist',
             'cssmin:dist',
