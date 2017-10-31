@@ -2,10 +2,6 @@
 
 var LIVERELOAD_PORT = 35730;
 var SERVER_PORT = 9001;
-var lrSnippet = require('connect-livereload')({port: LIVERELOAD_PORT});
-var mountFolder = function (connect, dir) {
-    return connect.static(require('path').resolve(dir));
-};
 
 module.exports = function(grunt) {
     var target = grunt.option('target') || '';
@@ -81,7 +77,7 @@ module.exports = function(grunt) {
                 hostname: '0.0.0.0',
                 livereload: LIVERELOAD_PORT
             },
-            livereload: {
+            tmp: {
                 options: {
                     //keepalive: true,
                     base: [config.tmp],
@@ -90,12 +86,12 @@ module.exports = function(grunt) {
                     }
                 }
             },
-            tmp: {
+            dist: {
                 options: {
-                    middleware: function (connect) {
-                        return [
-                            mountFolder(connect, config.dist)
-                        ];
+                    keepalive: true,
+                    base: [config.dist],
+                    open: {
+                        target: 'http://localhost:<%= connect.options.port %>'
                     }
                 }
             }
@@ -239,7 +235,7 @@ module.exports = function(grunt) {
         'postcss:tmp',
         'concat:tmp',
         'copy:tmp',
-        'connect:livereload',
+        'connect:tmp',
         'watch'
     ]);
 
@@ -256,6 +252,23 @@ module.exports = function(grunt) {
             'concat:dist',
             'uglify:dist',
             'copy:dist',
+        ]);
+    });
+
+    grunt.registerTask('build-connect', function (target) {
+        if (typeof target === 'undefined') {
+            target = 'dev';
+        }
+
+        grunt.task.run([
+            'clean',
+            'stylus:dist',
+            'postcss:dist',
+            'cssmin:dist',
+            'concat:dist',
+            'uglify:dist',
+            'copy:dist',
+            'connect:dist'
         ]);
     });
 };
