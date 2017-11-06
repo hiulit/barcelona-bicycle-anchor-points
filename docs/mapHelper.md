@@ -64,10 +64,6 @@ http://leafletjs.com/reference-1.2.0.html#circle
 
 Returns an `Array` of numbers.
 
-### Example
-
-`mapHelper.radiusOptions`
-
 ### Parameters
 
 | Name | Type | Description |
