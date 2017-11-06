@@ -40,12 +40,15 @@ Returns a `LatLng` object with coordinates (Barcelona's city center).
 
 `mapHelper.initialPosition`
 
-
 ## markersLayer
 
 Creates a new layer group object.
 
 http://leafletjs.com/reference-1.2.0.html#layergroup
+
+### Example
+
+`mapHelper.markersLayer`
 
 ## radiusCircle
 
@@ -53,9 +56,17 @@ Creates a new circle object.
 
 http://leafletjs.com/reference-1.2.0.html#circle
 
+### Example
+
+`mapHelper.radiusCircle`
+
 ## radiusOptions
 
 Returns an `Array` of numbers.
+
+### Example
+
+`mapHelper.radiusOptions`
 
 ### Parameters
 
@@ -99,15 +110,27 @@ Creates a new circle object (to be used as radius for the user's position).
 
 http://leafletjs.com/reference-1.2.0.html#circle
 
+### Example
+
+`mapHelper.userPositionCircle`
+
 ## userPositionMarker
 
 Creates a new circle object (to be used as a marker for the user's position).
 
 http://leafletjs.com/reference-1.2.0.html#marker
 
+### Example
+
+`mapHelper.userPositionMarker`
+
 ## userRadius
 
 Returns the user's radius when [location is found](#onlocationfounde).
+
+### Example
+
+`mapHelper.userRadius`
 
 ## addRadiusAndMarkers()
 
@@ -123,21 +146,41 @@ Calls:
 
 Calls [apiHelper.getNearestAnchors](../apiHelper.md/#getnearestanchorsposition-radius).
 
+### Example
+
+`mapHelper.addAnchorsMarkers()`
+
 ## addAnchorsCircle()
 
-Creates a circle with the user's position and radius  and adds it to `mapHelper.markersLayer`.
+Creates a circle with the user's position and radius  and adds it to [mapHelper.markersLayer](#markerslayer).
+
+### Example
+
+`mapHelper.addAnchorsCircle()`
 
 ## addUserPositionMarker()
 
-Creates a marker with the user's position and adds it to `mapHelper.markersLayer`.
+Creates a marker with the user's position and adds it to [mapHelper.markersLayer](#markerslayer).
+
+### Example
+
+`mapHelper.addUserPositionMarker()`
 
 ## addUserPositionCircle()
 
-Creates a circle with the user's position and radius and adds it to `mapHelper.markersLayer`.
+Creates a circle with the user's position and radius and adds it to [mapHelper.markersLayer](#markerslayer).
+
+### Example
+
+`mapHelper.addUserPositionCircle()`
 
 ## clearAllLayers()
 
 Removes all the layers from [mapHelper.markersLayer](#markerslayer).
+
+### Example
+
+`mapHelper.clearAllLayers()`
 
 ## loading(show)
 
@@ -163,9 +206,17 @@ Shows/hides loading animation.
 
 Returns the value from the radius select.
 
+### Example
+
+`mapHelper.getSelectedRadius()`
+
 ## getUserLocation()
 
 Finds user's location and centers the map.
+
+### Example
+
+`mapHelper.getUserLocation()`
 
 ## onLocationError(e)
 
