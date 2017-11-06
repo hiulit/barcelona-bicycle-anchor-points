@@ -35,7 +35,7 @@ module.exports = function(grunt) {
                             'assets/{,*/,**/}*.*',
                             'data/{,*/,**/}*.json',
                             '{,*/,**/}*.html',
-                            '{,*/,**/}*.{png,ico}',
+                            '{,*/,**/}*.{png,ico}'
                             // '!old/{,*/,**/}*.*'
                         ],
                         dest: '<%= config.tmp %>/'
@@ -58,7 +58,8 @@ module.exports = function(grunt) {
                         src: [
                             'assets/{,*/,**/}*.*',
                             'data/{,*/,**/}*.json',
-                            '{,*/,**/}*.html'
+                            '{,*/,**/}*.html',
+                            '{,*/,**/}*.{png,ico}'
                             // '!old/{,*/,**/}*.*'
                         ],
                         dest: '<%= config.dist %>/'
@@ -114,7 +115,7 @@ module.exports = function(grunt) {
                     '<%= config.src %>/{,*/,**/}*.html'
                 ],
                 tasks: [
-                    'copy'
+                    'copy:tmp'
                 ]
             },
             styles: {
@@ -122,8 +123,8 @@ module.exports = function(grunt) {
                     '<%= config.src %>/{,*/,**/}*.styl'
                 ],
                 tasks: [
-                    'stylus',
-                    'postcss'
+                    'stylus:tmp',
+                    'postcss:tmp'
                 ]
             },
             scripts: {
@@ -132,7 +133,7 @@ module.exports = function(grunt) {
                     // '!<%= config.src %>/scripts/unusedFunctions.js'
                 ],
                 tasks: [
-                    'concat'
+                    'concat:tmp'
                 ]
             }
         },
