@@ -1,8 +1,6 @@
 # mapHelper
 
 * [initialPosition](#initialposition)
-* [loading.hide()](#loadingshow)
-* [loading.show()](#loadinghide)
 * [markersLayer](#markerslayer)
 * [radiusCircle](#radiuscircle)
 * [radiusOptions](#radiusoptions)
@@ -11,88 +9,167 @@
 * [userPositionMarker](#userpositionmarker)
 * [userRadius](#userradius)
 * [addRadiusAndMarkers()](#addradiusandmarkers)
-* [addRadiusCircle()](#addradiuscircle)
-* [addRadiusMarkers()](#addradiusmarkers)
+* [addAnchorsCircle()](#addanchorscircle)
+* [addAnchorsMarkers()](#addanchorsmarkers)
 * [addUserPositionCircle()](#adduserpositioncircle)
 * [addUserPositionMarker()](#adduserpositionmarker)
 * [clearAllLayers()](#clearalllayers)
 * [getSelectedRadius()](#getselectedradius)
 * [getUserLocation()](#getuserlocation)
-* [onLocationError()](#onlocationerror)
-* [onLocationFound()](#onlocationfound)
+* [loading(show)](#loadingshow)
+* [onLocationError()](#onlocationerrore)
+* [onLocationFound()](#onlocationfounde)
 
 ## initialPosition
 
-The center of Barcelona.
+Returns a `LatLng` object with coordinates (Barcelona's city center).
 
-`{ lat: 41.386664, lng: 2.1675844 }`
+### Parameters
 
-## loading.show()
+| Name | Type | Description |
+| :---: | :---: | :---: |
+| - | - | - |
 
-Shows loading animation.
+### Output
 
-## loading.hide()
+| Type | Description |
+| --- | --- |
+| `Object` | `LatLng` object: `{ lat: Number, lng: Number }` |
 
-Hides loading animation.
+### Example
 
-## markersLayer
+`mapHelper.initialPosition`
 
-`new L.LayerGroup()`
+## markersLayer
+
+Creates a new layer group object.
+
+http://leafletjs.com/reference-1.2.0.html#layergroup
 
 ## radiusCircle
 
-`new L.circle()`
+Creates a new circle object.
+
+http://leafletjs.com/reference-1.2.0.html#circle
 
 ## radiusOptions
 
-Radius' values in meters.
+Returns an `Array` of numbers.
 
-`[ 100, 200, 300]`
+### Parameters
+
+| Name | Type | Description |
+| :---: | :---: | :---: |
+| - | - | - |
+
+### Output
+
+| Type | Description |
+| --- | --- |
+| `Array` | numbers |
+
+### Example
+
+`mapHelper.radiusOptions`
 
 ## userPosition
 
-Gets the user position when [location is found](#onlocationfound).
+Returns a `LatLng` object with coordinates. [initialPosition](#initialposition) by default.
 
-[initialPosition](#initialposition) by default.
+### Parameters
+
+| Name | Type | Description |
+| :---: | :---: | :---: |
+| - | - | - |
+
+### Output
+
+| Type | Description |
+| --- | --- |
+| `Object` | `LatLng` object: `{ lat: Number, lng: Number }` |
+
+### Example
+
+`mapHelper.userPosition`
 
 ## userPositionCircle
 
-`new L.circle()`
+Creates a new circle object (to be used as radius for the user's position).
+
+http://leafletjs.com/reference-1.2.0.html#circle
 
 ## userPositionMarker
 
-`new L.marker()`
+Creates a new circle object (to be used as a marker for the user's position).
+
+http://leafletjs.com/reference-1.2.0.html#marker
 
 ## userRadius
 
-Gets the user's radius when [location is found](#onlocationfound).
+Returns the user's radius when [location is found](#onlocationfounde).
 
-`null` by default
+## addRadiusAndMarkers()
+
+Calls:
+
+* [mapHelper.clearAllLayers()](#clearalllayers)
+* [mapHelper.addAnchorsCircle()](#addanchorscircle)
+* [mapHelper.addAnchorsMarkers()](#addanchorsmarkers)
+* [mapHelper.addUserPositionCircle()](#adduserpositioncircle)
+* [mapHelper.addUserPositionMarker()](#adduserpositionmarker)
+
+## addAnchorsMarkers()
+
+Calls [apiHelper.getNearestAnchors](../apiHelper.md/#getnearestanchorsposition-radius).
+
+## addAnchorsCircle()
+
+Creates a circle with the user's position and radius  and adds it to `mapHelper.markersLayer`.
+
+## addUserPositionMarker()
+
+Creates a marker with the user's position and adds it to `mapHelper.markersLayer`.
+
+## addUserPositionCircle()
+
+Creates a circle with the user's position and radius and adds it to `mapHelper.markersLayer`.
+
+## clearAllLayers()
+
+Removes all the layers from [mapHelper.markersLayer](#markerslayer).
+
+## loading(show)
+
+Shows/hides loading animation.
+
+### Parameters
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `show` | `Boolean` | `true` or `false` |
+
+### Output
+
+| Type | Description |
+| :---: | --- |
+| - | Shows/hides loading animation |
+
+### Example
+
+`mapHelper.loading(true)`
+
+## getSelectedRadius()
+
+Returns the value from the radius select.
 
 ## getUserLocation()
 
 Finds user's location and centers the map.
 
-## onLocationFound()
+## onLocationError(e)
 
-Gets user's position and radius and shows it on the map.
+Shows an alert when position is not found or user denies geolocation services.
 
-## onLocationError()
+## onLocationFound(e)
 
-Shows an alert when position is not found or user's denies using geolocation.
-
-## getSelectedRadius()
-
-Gets the value from the radius select.
-
-## addRadiusAndMarkers()
-
-## addUserPositionMarker()
-
-## addUserPositionCircle()
-
-## addRadiusMarkers()
-
-## addRadiusCircle()
-
-## clearAllLayers()
+Returns user's position and radius and shows it on the map.

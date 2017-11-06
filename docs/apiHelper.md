@@ -2,7 +2,7 @@
 
 * [getFeaturesProperties()](#getfeaturesproperties)
 * [getFeatureProperty(key)](#getfeaturepropertykey)
-* [getAnchorByFeatureProperty(key, value)](#getanchorbyfeaturepropertykey-value)
+* [getAnchorsByFeatureProperty(key, value)](#getanchorsbyfeaturepropertykey-value)
 * [getNearestAnchors(position, radius)](#getnearestanchorsposition-radius)
 
 ## getFeaturesProperties()
@@ -45,7 +45,7 @@ Returns an `Array` with all the values from a given feature property key.
 
 `apiHelper.getFeatureProperty('DIST')`
 
-## getAnchorByFeatureProperty(key, value)
+## getAnchorsByFeatureProperty(key, value)
 
 Returns a `Array` with `LatLng` objects from a given feature property key and feature property value.
 
@@ -64,7 +64,7 @@ Returns a `Array` with `LatLng` objects from a given feature property key and fe
 
 ### Example
 
-`apiHelper.getAnchorByFeatureProperty('DIST', 'Gràcia')`
+`apiHelper.getAnchorsByFeatureProperty('DIST', 'Gràcia')`
 
 ## getNearestAnchors(position, radius)
 
