@@ -34,7 +34,8 @@ module.exports = function(grunt) {
                         src: [
                             'assets/{,*/,**/}*.*',
                             'data/{,*/,**/}*.json',
-                            '{,*/,**/}*.html'
+                            '{,*/,**/}*.html',
+                            '{,*/,**/}*.{png,ico}',
                             // '!old/{,*/,**/}*.*'
                         ],
                         dest: '<%= config.tmp %>/'
