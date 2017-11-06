@@ -40,7 +40,7 @@ Returns a `LatLng` object with coordinates (Barcelona's city center).
 
 `mapHelper.initialPosition`
 
-## markersLayer
+## markersLayer
 
 Creates a new layer group object.
 
