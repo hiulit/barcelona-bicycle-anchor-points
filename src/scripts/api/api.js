@@ -2,37 +2,27 @@ var defaults = {
     position: {
         lat: 41.386664,
         lng: 2.1675844
-    },
-    radius: 300
+    }
 }
 
 var mapHelper = {
     initialPosition: new L.latLng(defaults.position),
-    loading: {
-        el: document.getElementById('loading'),
-        show: function() {
-            this.el.classList.add('is-visible')
-        },
-        hide: function() {
-            this.el.classList.remove('is-visible')
-        }
-    },
     markersLayer: new L.LayerGroup(),
     radiusCircle: new L.circle(),
     radiusOptions: [100, 200, 300],
     userPosition: new L.latLng(defaults.position),
     userPositionCircle: new L.circle(),
     userPositionMarker: new L.marker(),
-    userRadius: defaults.radius,
+    userRadius: null,
     addRadiusAndMarkers: function() {
         mapHelper.clearAllLayers();
-        mapHelper.addRadiusCircle();
-        mapHelper.addRadiusMarkers();
+        mapHelper.addAnchorsCircle();
+        mapHelper.addAnchorsMarkers();
         mapHelper.addUserPositionCircle();
         mapHelper.addUserPositionMarker();
         mapHelper.markersLayer.addTo(map);
     },
-    addRadiusCircle: function() {
+    addAnchorsCircle: function() {
         mapHelper.radiusCircle
             .setLatLng(mapHelper.userPosition)
             .setRadius(mapHelper.getSelectedRadius())
@@ -42,7 +32,8 @@ var mapHelper = {
                 weight: 1
         }).addTo(mapHelper.markersLayer);
     },
-    addRadiusMarkers: function() {
+    addAnchorsMarkers: function() {
+        console.log('Selected radius:', mapHelper.getSelectedRadius());
         apiHelper.getNearestAnchors(mapHelper.userPosition, mapHelper.getSelectedRadius());
     },
     addUserPositionCircle: function() {
@@ -60,37 +51,44 @@ var mapHelper = {
     },
     clearAllLayers: function() {
         mapHelper.markersLayer.clearLayers();
-        // map.removeLayer(myLocationCircle);
-        // map.removeLayer(myLocationMarker);
-        // map.removeLayer(radiusCircle);
     },
     getSelectedRadius: function() {
         var radiusSelect = document.getElementById('radius-select');
         var radius = radiusSelect[radiusSelect.selectedIndex].value;
-        return radius;
+        return Number(radius);
     },
     getUserLocation: function() {
         if (!navigator.geolocation) {
-            alert('Geolocation is not available');
+            alert('Geolocation is not available!');
         } else {
             mapHelper.clearAllLayers();
-            mapHelper.loading.show();
+            mapHelper.loading(true);
             map.locate({
                 maxZoom: 16,
                 setView: true
             });
         }
     },
+    loading: function(show) {
+        var el = document.getElementById('loading');
+        if (show == true) {
+            console.log('Showing loader...');
+            el.classList.add('is-visible')
+        } else if (show == false) {
+            console.log('Loader removed!');
+            el.classList.remove('is-visible')
+        }
+    },
     onLocationFound: function(e) {
-        console.log(mapHelper.userPosition);
-        console.log(mapHelper.userRadius);
         mapHelper.userPosition = new L.latLng(e.latlng.lat, e.latlng.lng);
         mapHelper.userRadius = Math.round(e.accuracy / 2);
-        mapHelper.loading.hide();
+        console.log('User\'s position:', mapHelper.userPosition);
+        console.log('User\'s radius:', mapHelper.userRadius);
+        mapHelper.loading(false);
         mapHelper.addRadiusAndMarkers();
     },
     onLocationError: function(e) {
-        mapHelper.loading.hide();
+        mapHelper.loading(false);
         alert(e.message);
     }
 }
@@ -126,7 +124,7 @@ var apiHelper = {
                     }
                 }
             }
-            console.log(array);
+            console.log('Feature properties', array);
             return array;
         });
     },
@@ -138,11 +136,11 @@ var apiHelper = {
                     array.push(data.features[i].properties[key]);
                 }
             }
-            console.log(array);
+            console.log('Feature property', array);
             return array;
         });
     },
-    getAnchorByFeatureProperty: function(key, value) {
+    getAnchorsByFeatureProperty: function(key, value) {
         apiHelper.getJSON(apiHelper.url, function(data){
             var array = [];
             mapHelper.clearAllLayers();
@@ -156,7 +154,7 @@ var apiHelper = {
                 },
                 onEachFeature: apiHelper.onEachFeature
             }).addTo(mapHelper.markersLayer);
-            console.log(array);
+            console.log('Anchors by feature property', array);
             mapHelper.markersLayer.addTo(map);
         });
     },
@@ -168,7 +166,6 @@ var apiHelper = {
         position = new L.latLng(position);
         apiHelper.getJSON(apiHelper.url, function(data){
             var array = [];
-            // mapHelper.clearAllLayers();
             L.Proj.geoJson(data, {
                 pointToLayer: function(geoJsonPoint, latlng) {
                     if (position.distanceTo(latlng) < radius) {
@@ -178,7 +175,7 @@ var apiHelper = {
                 },
                 onEachFeature: apiHelper.onEachFeature
             }).addTo(mapHelper.markersLayer);
-            console.log(array);
+            console.log('Nearest anchors:', array);
             mapHelper.markersLayer.addTo(map);
         });
     },
