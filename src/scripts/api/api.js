@@ -13,7 +13,7 @@ var mapHelper = {
     userPosition: new L.latLng(defaults.position),
     userPositionCircle: new L.circle(),
     userPositionMarker: new L.marker(),
-    userRadius: null,
+    userRadius: 0,
     addRadiusAndMarkers: function() {
         mapHelper.clearAllLayers();
         mapHelper.addAnchorsCircle();
@@ -50,6 +50,7 @@ var mapHelper = {
         .addTo(mapHelper.markersLayer);
     },
     clearAllLayers: function() {
+        console.log('All layers cleared!');
         mapHelper.markersLayer.clearLayers();
     },
     getSelectedRadius: function() {
