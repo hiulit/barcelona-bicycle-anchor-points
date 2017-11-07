@@ -1,10 +1,8 @@
 # Barcelona bicycle anchors points
 
-Find public bicycle anchor points near you in Barcelona!
+Find public bicycle anchor points near you in Barcelona! [Check it out!](https://hiulit.github.io/barcelona-bicycle-anchor-points/dist/)
 
-[Check it out!](https://hiulit.github.io/barcelona-bicycle-anchor-points/dist/)
-
-![App example](app-example.png)
+![App example](app-example-small.png)
 
 ## Development
 
@@ -12,6 +10,10 @@ Find public bicycle anchor points near you in Barcelona!
 * Clone the project `git clone https://github.com/hiulit/barcelona-bicycle-anchor-points.git`.
 * Install dependencies `npm install`.
 * Run `grunt`.
+* You can choose between:
+    * Develop in a localhost server
+    * Build for deployment
+    * Build for deployment and start a localhost server
 
 ## API
 
