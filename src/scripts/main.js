@@ -1,129 +1,11 @@
-var mapHelper = {
-    loading: {
-        el: document.getElementById('loading'),
-        show: function() {
-            this.el.classList.add('is-showing')
-        },
-        hide: function() {
-            this.el.classList.remove('is-showing')
-        }
-    },
-    initialPosition: new L.latLng(41.386664, 2.1675844),
-    markersLayer: new L.LayerGroup(),
-    radiusCircle: new L.circle(),
-    radiusOptions: [100, 200, 300],
-    userPosition: new L.latLng(41.386664, 2.1675844),
-    userPositionCircle: new L.circle(),
-    userPositionMarker: new L.marker(),
-    userRadius: null,
-    getUserLocation: function() {
-        if (!navigator.geolocation) {
-            alert('Geolocation is not available');
-        } else {
-            mapHelper.clearAllLayers();
-            mapHelper.loading.show();
-            map.locate({
-                maxZoom: 16,
-                setView: true
-            });
-        }
-    },
-    onLocationFound: function(e) {
-        mapHelper.userPosition = new L.latLng(e.latlng.lat, e.latlng.lng);
-        mapHelper.userRadius = Math.round(e.accuracy / 2);
-        mapHelper.loading.hide();
-        mapHelper.addRadiusAndMarkers();
-    },
-    onLocationError: function(e) {
-        mapHelper.loading.hide();
-        alert(e.message);
-    },
-    getSelectedRadius: function() {
-        var radiusSelect = document.getElementById('radius-select');
-        var radius = radiusSelect[radiusSelect.selectedIndex].value;
-        return radius;
-    },
-    addRadiusAndMarkers: function() {
-        mapHelper.clearAllLayers();
-        mapHelper.addUserPositionMarker();
-        mapHelper.addUserPositionCircle();
-        mapHelper.addRadiusMarkers();
-        mapHelper.addRadiusCircle();
-        mapHelper.markersLayer.addTo(map);
-    },
-    addUserPositionMarker: function() {
-        mapHelper.userPositionMarker
-            .setLatLng(mapHelper.userPosition)
-            .bindPopup("You are within " + mapHelper.userRadius + " meters from this point")
-            .openPopup()
-        .addTo(mapHelper.markersLayer);
-    },
-    addUserPositionCircle: function() {
-        mapHelper.userPositionCircle
-            .setLatLng(mapHelper.userPosition)
-            .setRadius(mapHelper.userRadius)
-        .addTo(mapHelper.markersLayer);
-    },
-    addRadiusMarkers: function() {
-        apiHelper.getNearestAnchors(mapHelper.getSelectedRadius());
-    },
-    addRadiusCircle: function() {
-        mapHelper.radiusCircle
-            .setLatLng(mapHelper.userPosition)
-            .setRadius(mapHelper.getSelectedRadius())
-            .setStyle({
-                fillOpacity: 0.4,
-                opacity: 1,
-                weight: 1
-        }).addTo(mapHelper.markersLayer);
-    },
-    clearAllLayers: function() {
-        mapHelper.markersLayer.clearLayers();
-        // map.removeLayer(myLocationCircle);
-        // map.removeLayer(myLocationMarker);
-        // map.removeLayer(radiusCircle);
-    }
-}
+// (function(cl){
+//     console.log = function() {
+//     if (window.allowConsole)
+//         cl(...arguments);
+//     }
+// })(console.log)
 
-var apiHelper = {
-    getFeatureProperties: function(property) {
-        var array = [];
-        for (var i=0; i<geojson.features.length; i++) {
-            if (array.indexOf(geojson.features[i].properties[property]) == -1) {
-                array.push(geojson.features[i].properties[property]);
-            }
-        }
-        return array;
-    },
-    getAnchorByFeatureProperty: function(property, name) {
-        mapHelper.markersLayer.clearLayers();
-        L.Proj.geoJson(geojson, {
-            pointToLayer: function(geoJsonPoint, latlng) {
-                return L.marker(latlng);
-            },
-            filter: function(geoJsonFeature) {
-                return geoJsonFeature.properties[property] == name;
-            },
-            onEachFeature: mapHelper.onEachFeature
-        }).addTo(mapHelper.markersLayer);
-        mapHelper.markersLayer.addTo(map);
-    },
-    getNearestAnchors: function(radius) {
-        L.Proj.geoJson(geojson, {
-            pointToLayer: function(geoJsonPoint, latlng) {
-                if (mapHelper.userPosition.distanceTo(latlng) < radius) {
-                    return L.marker(latlng);
-                }
-            },
-            onEachFeature: apiHelper.onEachFeature
-        }).addTo(mapHelper.markersLayer);
-    },
-    onEachFeature: function(feature, layer) {
-        if (feature.properties && feature.properties.NOM_EQUIP) {
-            layer.bindPopup(feature.properties.NOM_EQUIP);
-        }
-    }
-}
+// window.allowConsole = true;
 
 var tileLayerUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
 
@@ -137,6 +19,14 @@ var tileLayerInstance = new L.tileLayer(tileLayerUrl, {
     id: 'mapbox.streets',
     maxZoom: 20
 });
+
+var UserIcon = L.Icon.Default.extend({
+    options: {
+        iconUrl: '../../assets/marker-icon-purple.png'
+    }
+});
+
+var userIcon = new UserIcon();
 
 var map = L.map('map', {
     layers: [tileLayerInstance]

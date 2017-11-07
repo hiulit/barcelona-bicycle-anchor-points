@@ -1,11 +1,8 @@
 'use strict';
 
 var LIVERELOAD_PORT = 35730;
-var SERVER_PORT = 9001;
-var lrSnippet = require('connect-livereload')({port: LIVERELOAD_PORT});
-var mountFolder = function (connect, dir) {
-    return connect.static(require('path').resolve(dir));
-};
+var TMP_PORT = 9001;
+var DIST_PORT = 9002;
 
 module.exports = function(grunt) {
     var target = grunt.option('target') || '';
@@ -20,29 +17,51 @@ module.exports = function(grunt) {
     grunt.initConfig({
         config: config,
         clean: {
+            tmp: [
+                '<%= config.tmp %>/'
+            ],
             dist: [
-                '<%= config.tmp %>/',
                 '<%= config.dist %>/'
             ]
         },
         copy: {
+            tmp: {
+                files: [
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: '<%= config.src %>/',
+                        src: [
+                            'assets/{,*/,**/}*.*',
+                            'data/{,*/,**/}*.json',
+                            '{,*/,**/}*.html',
+                            '{,*/,**/}*.{png,ico}'
+                            // '!old/{,*/,**/}*.*'
+                        ],
+                        dest: '<%= config.tmp %>/'
+                    },
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: 'node_modules/leaflet/dist/images/',
+                        src: ['{,*/,**/}*.*'],
+                        dest: '<%= config.tmp %>/styles/images/'
+                    }
+                ]
+            },
             dist: {
                 files: [
                     {
                         expand: true,
                         dot: true,
-                        cwd: '<%= config.src %>/assets/',
-                        src: [
-                            '{,*/,**/}*.*',
-                            '!old/{,*/,**/}*.*'
-                        ],
-                        dest: '<%= config.dist %>/assets/'
-                    },
-                    {
-                        expand: true,
-                        dot: true,
                         cwd: '<%= config.src %>/',
-                        src: ['{,*/,**/}*.html'],
+                        src: [
+                            'assets/{,*/,**/}*.*',
+                            'data/{,*/,**/}*.json',
+                            '{,*/,**/}*.html',
+                            '{,*/,**/}*.{png,ico}'
+                            // '!old/{,*/,**/}*.*'
+                        ],
                         dest: '<%= config.dist %>/'
                     },
                     {
@@ -57,27 +76,29 @@ module.exports = function(grunt) {
         },
         connect: {
             options: {
-                port: grunt.option('port') || SERVER_PORT,
+                // port: grunt.option('port') || SERVER_PORT,
                 // change this to '0.0.0.0' to access the server from outside
                 // hostname: 'localhost',
                 hostname: '0.0.0.0',
                 livereload: LIVERELOAD_PORT
             },
-            livereload: {
+            tmp: {
                 options: {
                     //keepalive: true,
-                    base: [config.dist],
+                    port: grunt.option('port') || TMP_PORT,
+                    base: [config.tmp],
                     open: {
-                        target: 'http://localhost:<%= connect.options.port %>'
+                        target: 'http://localhost:<%= connect.tmp.options.port %>'
                     }
                 }
             },
             dist: {
                 options: {
-                    middleware: function (connect) {
-                        return [
-                            mountFolder(connect, config.dist)
-                        ];
+                    keepalive: true,
+                    port: grunt.option('port') || DIST_PORT,
+                    base: [config.dist],
+                    open: {
+                        target: 'http://localhost:<%= connect.dist.options.port %>'
                     }
                 }
             }
@@ -90,10 +111,11 @@ module.exports = function(grunt) {
             assets: {
                 files: [
                     '<%= config.src %>/assets/{,*/,**/}*.*',
+                    '<%= config.src %>/data/{,*/,**/}*.json',
                     '<%= config.src %>/{,*/,**/}*.html'
                 ],
                 tasks: [
-                    'copy'
+                    'copy:tmp'
                 ]
             },
             styles: {
@@ -101,21 +123,26 @@ module.exports = function(grunt) {
                     '<%= config.src %>/{,*/,**/}*.styl'
                 ],
                 tasks: [
-                    'stylus',
-                    'postcss'
+                    'stylus:tmp',
+                    'postcss:tmp'
                 ]
             },
             scripts: {
                 files: [
-                    '<%= config.src %>/{,*/,**/}*.js',
-                    '!<%= config.src %>/scripts/unusedFunctions.js'
+                    '<%= config.src %>/{,*/,**/}*.js'
+                    // '!<%= config.src %>/scripts/unusedFunctions.js'
                 ],
                 tasks: [
-                    'concat'
+                    'concat:tmp'
                 ]
             }
         },
         uglify: {
+            tmp: {
+                files: {
+                '<%= config.tmp %>/scripts/main.js': ['<%= config.tmp %>/scripts/main.js']
+                }
+            },
             dist: {
                 files: {
                 '<%= config.dist %>/scripts/main.js': ['<%= config.dist %>/scripts/main.js']
@@ -123,14 +150,19 @@ module.exports = function(grunt) {
             }
         },
         stylus: {
-            dist: {
-                options: {
-                    sourcemap: {
-                        inline: true
-                    },
-                    'include css': true,
-                    compress: false
+            options: {
+                sourcemap: {
+                    inline: true
                 },
+                'include css': true,
+                compress: false
+            },
+            tmp: {
+                files: {
+                    '<%= config.tmp %>/styles/main.css': '<%= config.src %>/styles/main.styl'
+                }
+            },
+            dist: {
                 files: {
                     '<%= config.dist %>/styles/main.css': '<%= config.src %>/styles/main.styl'
                 }
@@ -145,6 +177,9 @@ module.exports = function(grunt) {
                     // require('autoprefixer')({browsers: ['> 0%', 'ie 8-10', 'Android >= 2.3']}) // add vendor prefixes
                 ]
             },
+            tmp: {
+                src: '<%= config.tmp %>/styles/main.css'
+            },
             dist: {
                 src: '<%= config.dist %>/styles/main.css'
             }
@@ -152,6 +187,15 @@ module.exports = function(grunt) {
         cssmin: {
             options: {
                 sourceMap: false
+            },
+            tmp: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= config.tmp %>/styles/',
+                    src: ['{,*/,**/}*.css'],
+                    dest: '<%= config.tmp %>/styles/',
+                    ext: '.css'
+                }]
             },
             dist: {
                 files: [{
@@ -167,42 +211,120 @@ module.exports = function(grunt) {
             options: {
                 separator: ';',
             },
+            tmp: {
+                src: [
+                    'node_modules/leaflet/dist/leaflet.js',
+                    'node_modules/proj4/dist/proj4.js',
+                    'node_modules/proj4leaflet/src/proj4leaflet.js',
+                    '<%= config.src %>/scripts/api/api.js',
+                    '<%= config.src %>/scripts/main.js'
+                    // '!<%= config.src %>/scripts/unusedFunctions.js'
+                ],
+                dest: '<%= config.tmp %>/scripts/main.js'
+            },
             dist: {
                 src: [
                     'node_modules/leaflet/dist/leaflet.js',
                     'node_modules/proj4/dist/proj4.js',
                     'node_modules/proj4leaflet/src/proj4leaflet.js',
-                    '<%= config.src %>/scripts/{,*/,**/}*.js',
-                    '!<%= config.src %>/scripts/unusedFunctions.js'
+                    '<%= config.src %>/scripts/api/api.js',
+                    '<%= config.src %>/scripts/main.js'
+                    // '!<%= config.src %>/scripts/unusedFunctions.js'
                 ],
                 dest: '<%= config.dist %>/scripts/main.js'
+            }
+        },
+        prompt: {
+            target: {
+                options: {
+                    questions: [
+                        {
+                            config: 'what-to-do',
+                            type: 'list', // list, checkbox, confirm, input, password
+                            message: 'What do you want to do?',
+                            default: 'local', // default value if nothing is entered
+                            choices: [
+                                {
+                                    name: 'Develop in a localhost server [> grunt local]',
+                                    value: 'local'
+                                },
+                                {
+                                    name: 'Build for deployment [> grunt build]',
+                                    value: 'build'
+                                },
+                                {
+                                    name: 'Build for deployment and start a localhost server [> grunt build-connect]',
+                                    value: 'build-connect'
+                                }
+                            ]
+                        }
+                    ]
+                }
             }
         }
     });
 
-    grunt.registerTask('default', [
-        'clean',
-        'stylus',
-        'postcss',
-        'concat',
-        'copy',
-        'connect:livereload',
-        'watch'
-    ]);
+    grunt.registerTask('tasks', function () {
+        grunt.task.run([
+            'prompt',
+            'what-to-do'
+        ]);
+    });
 
-    grunt.registerTask('build', function (target) {
+    grunt.registerTask('what-to-do', function (a, b) {
+        grunt.task.run([grunt.config('what-to-do')]);
+    });
+
+    grunt.registerTask('default', function(target) {
+        grunt.task.run(['tasks']);
+    });
+
+    grunt.registerTask('local', function (target) {
         if (typeof target === 'undefined') {
-            target = 'dev';
+            target = 'local';
         }
 
         grunt.task.run([
-            'clean',
-            'stylus',
-            'postcss',
-            'cssmin',
-            'concat',
-            'uglify',
-            'copy',
+            'clean:tmp',
+            'stylus:tmp',
+            'postcss:tmp',
+            'concat:tmp',
+            'copy:tmp',
+            'connect:tmp',
+            'watch'
+        ]);
+    });
+
+    grunt.registerTask('build', function (target) {
+        if (typeof target === 'undefined') {
+            target = 'build';
+        }
+
+        grunt.task.run([
+            'clean:dist',
+            'stylus:dist',
+            'postcss:dist',
+            'cssmin:dist',
+            'concat:dist',
+            'uglify:dist',
+            'copy:dist',
+        ]);
+    });
+
+    grunt.registerTask('build-connect', function (target) {
+        if (typeof target === 'undefined') {
+            target = 'build-connect';
+        }
+
+        grunt.task.run([
+            'clean:dist',
+            'stylus:dist',
+            'postcss:dist',
+            'cssmin:dist',
+            'concat:dist',
+            'uglify:dist',
+            'copy:dist',
+            'connect:dist'
         ]);
     });
 };
