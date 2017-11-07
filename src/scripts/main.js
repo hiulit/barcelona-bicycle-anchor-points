@@ -20,6 +20,14 @@ var tileLayerInstance = new L.tileLayer(tileLayerUrl, {
     maxZoom: 20
 });
 
+var UserIcon = L.Icon.Default.extend({
+    options: {
+        iconUrl: '../../assets/marker-icon-purple.png'
+    }
+});
+
+var userIcon = new UserIcon();
+
 var map = L.map('map', {
     layers: [tileLayerInstance]
 }).setView(mapHelper.userPosition, 12);

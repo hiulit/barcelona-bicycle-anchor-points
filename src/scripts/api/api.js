@@ -44,6 +44,7 @@ var mapHelper = {
     },
     addUserPositionMarker: function() {
         mapHelper.userPositionMarker
+            .setIcon(userIcon)
             .setLatLng(mapHelper.userPosition)
             .bindPopup("You are within " + mapHelper.userRadius + " meters from this point")
             .openPopup()
