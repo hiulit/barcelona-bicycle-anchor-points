@@ -14,7 +14,7 @@ let URLArray = [
 ]
 
 let JSONArray = []
-let JSONOutput = 'src/data/barcelona-bycicle-anchors.json'
+let JSONOutput = 'src/data/barcelona-bicycle-anchors.json'
 let JSONMerge
 
 let bar = new progressBar({

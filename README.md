@@ -15,8 +15,8 @@ Find public bicycle anchor points near you in Barcelona! [Check it out!](https:/
     * **Develop in a localhost server** - Start the development environment.
     * **Build for production and start a localhost server** - Build the project at `/dist` ready for production and start a localhost server to review changes before uploading the project to production.
     * **Build for production** - Build the project at `/dist` ready for production.
-    * **Update bycicle anchor points JSON** - Downloads the JSON from https://w33.bcn.cat/planolBCN/ and saves it to `src/data`.
-* Choose **Update bycicle anchor points JSON**.
+    * **Update bicycle anchor points JSON** - Downloads the JSON from https://w33.bcn.cat/planolBCN/ and saves it to `src/data`.
+* Choose **Update bicycle anchor points JSON**.
 * Run `grunt` again and choose **Develop in a localhost server**.
 
 ## Deployment

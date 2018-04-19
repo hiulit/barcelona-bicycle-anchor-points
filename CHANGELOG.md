@@ -8,7 +8,7 @@
 
 ### Added
 
-* New `grunt update-json` task to update the bycicle anchor points JSON.
+* New `grunt update-json` task to update the bicycle anchor points JSON.
 
 ### Changed
 
