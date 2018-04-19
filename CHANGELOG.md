@@ -19,6 +19,6 @@
 * Released stable version.
 * Created documentation for [apiHelper](/docs/apiHelper.md) and [mapHelper](/docs/mapHelper.md).
 
-### [0.1.0] - 2017-11-23
+## [0.1.0] - 2017-11-23
 
 * Released initial version.
