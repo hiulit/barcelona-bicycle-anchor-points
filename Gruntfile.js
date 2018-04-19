@@ -249,17 +249,26 @@ module.exports = function(grunt) {
                                     value: 'local'
                                 },
                                 {
-                                    name: 'Build for deployment [> grunt build]',
+                                    name: 'Build for production and start a localhost server [> grunt build-connect]',
+                                    value: 'build-connect'
+                                },
+                                {
+                                    name: 'Build for production [> grunt build]',
                                     value: 'build'
                                 },
                                 {
-                                    name: 'Build for deployment and start a localhost server [> grunt build-connect]',
-                                    value: 'build-connect'
+                                  name: 'Update anchor points JSON [> grunt update-json]',
+                                    value: 'update-json'
                                 }
                             ]
                         }
                     ]
                 }
+            }
+        },
+        shell: {
+            "update-json": {
+                command: 'node update-json.js'
             }
         }
     });
@@ -295,6 +304,23 @@ module.exports = function(grunt) {
         ]);
     });
 
+    grunt.registerTask('build-connect', function (target) {
+        if (typeof target === 'undefined') {
+            target = 'build-connect';
+        }
+
+        grunt.task.run([
+            'clean:dist',
+            'stylus:dist',
+            'postcss:dist',
+            'cssmin:dist',
+            'concat:dist',
+            'uglify:dist',
+            'copy:dist',
+            'connect:dist'
+        ]);
+    });
+
     grunt.registerTask('build', function (target) {
         if (typeof target === 'undefined') {
             target = 'build';
@@ -311,20 +337,14 @@ module.exports = function(grunt) {
         ]);
     });
 
-    grunt.registerTask('build-connect', function (target) {
+
+    grunt.registerTask('update-json', function (target) {
         if (typeof target === 'undefined') {
-            target = 'build-connect';
+            target = 'update-json';
         }
 
         grunt.task.run([
-            'clean:dist',
-            'stylus:dist',
-            'postcss:dist',
-            'cssmin:dist',
-            'concat:dist',
-            'uglify:dist',
-            'copy:dist',
-            'connect:dist'
+            'shell:update-json'
         ]);
     });
 };
