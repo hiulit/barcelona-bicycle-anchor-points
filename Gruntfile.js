@@ -311,6 +311,7 @@ module.exports = function(grunt) {
 
         grunt.task.run([
             'clean:dist',
+            'shell:update-json',
             'stylus:dist',
             'postcss:dist',
             'cssmin:dist',
@@ -328,6 +329,7 @@ module.exports = function(grunt) {
 
         grunt.task.run([
             'clean:dist',
+            'shell:update-json',
             'stylus:dist',
             'postcss:dist',
             'cssmin:dist',
