@@ -257,7 +257,7 @@ module.exports = function(grunt) {
                                     value: 'build'
                                 },
                                 {
-                                  name: 'Update anchor points JSON [> grunt update-json]',
+                                  name: 'Update bicycle anchor points JSON [> grunt update-json]',
                                     value: 'update-json'
                                 }
                             ]
