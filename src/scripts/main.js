@@ -37,43 +37,28 @@ proj4.defs("EPSG:25831", "+proj=utm +zone=31 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0
 map.on('locationfound', mapHelper.onLocationFound);
 map.on('locationerror', mapHelper.onLocationError);
 
-// Creates location button.
-L.Control.Location = L.Control.extend({
-    onAdd: function(map) {
-        var container = L.DomUtil.create('div',
-                'leaflet-control-locate leaflet-bar leaflet-control');
+var mapMoveEndFlag = false
+var mapMoveFlag = false
 
-        var link = L.DomUtil.create('a', 'leaflet-bar-part leaflet-bar-part-single', container);
-        link.href = '#';
-        link.id = 'get-my-location';
-        link.title = 'Get my location';
-        link.setAttribute('role', 'button');
-        link.setAttribute('aria-label', link.title);
-
-        var icon = L.DomUtil.create('img', '', link);
-        icon.src = './assets/ic_my_location_black_24px.svg';
-        icon.style.height = '30px';
-        icon.style.width = '20px';
-
-        L.DomEvent
-            .addListener(container, 'click', L.DomEvent.stop)
-            .addListener(container, 'click', mapHelper.getUserLocation)
-        L.DomEvent.disableClickPropagation(container);
-
-        return container;
-    },
-    onRemove: function(map) {
-        // Nothing to do here
+function toggleMapMove() {
+    if (!mapMoveFlag) {
+        return;
     }
-});
-
-L.control.location = function(opts) {
-    return new L.Control.Location(opts);
+    else {
+        mapHelper.markersLayer.clearLayers();
+        mapHelper.userPositionMarker.setLatLng(map.getCenter());
+    }
 }
 
-L.control.location({
-    position: 'topleft'
-}).addTo(map);
+function toggleMapMoveEnd() {
+    if (!mapMoveEndFlag) {
+        return;
+    }
+    else {
+        mapHelper.userPosition = map.getCenter();
+        mapHelper.addRadiusAndMarkers();
+    }
+}
 
 // Creates radius select.
 L.Control.Select = L.Control.extend({
@@ -113,3 +98,50 @@ L.control.select = function(opts) {
 L.control.select({
     position: 'topright'
 }).addTo(map);
+
+var myLocationButton = L.easyButton({
+    states: [
+        {
+            icon: 'icon icon--my-location',
+            onClick: function() {
+                toggleButton.state('toggle-on');
+                mapMoveFlag = false
+                mapMoveEndFlag = false
+                mapHelper.clearAllLayers();
+                mapHelper.getUserLocation();
+            }
+        }
+    ]
+});
+myLocationButton.addTo(map);
+
+// Toggle button
+var toggleButton = L.easyButton({
+    states: [
+        {
+            icon: 'icon icon--location',
+            onClick: function(control) {
+                control.state('toggle-off');
+                mapHelper.userRadius = 0;
+                mapHelper.userPosition = map.getCenter();
+                mapHelper.addRadiusAndMarkers();
+                mapMoveFlag = true;
+                map.on('move', toggleMapMove);
+                mapMoveEndFlag = true;
+                map.on('moveend', toggleMapMoveEnd)
+            },
+            stateName: 'toggle-on'
+        },
+        {
+            icon: 'icon icon--back',
+            onClick: function(control) {
+                control.state('toggle-on');
+                mapMoveFlag = false;
+                mapMoveEndFlag = false;
+                mapHelper.clearAllLayers();
+            },
+            stateName: 'toggle-off'
+        }
+    ]
+});
+toggleButton.addTo(map);
