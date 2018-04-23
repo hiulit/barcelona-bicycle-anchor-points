@@ -103,6 +103,9 @@ var mapHelper = {
     onLocationError: function(e) {
         mapHelper.loading(false);
         alert(e.message);
+        mapHelper.userPosition = mapHelper.initialPosition
+        mapHelper.addRadiusAndMarkers();
+        map.setView(mapHelper.userPosition, 16);
     }
 }
 
