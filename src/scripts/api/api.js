@@ -8,6 +8,7 @@ var defaults = {
 var mapHelper = {
     initialPosition: new L.latLng(defaults.position),
     markersLayer: new L.LayerGroup(),
+    userPositionMarkerLayer: new L.LayerGroup(),
     radiusCircle: new L.circle(),
     radiusOptions: [100, 200, 300],
     userPosition: new L.latLng(defaults.position),
@@ -21,6 +22,7 @@ var mapHelper = {
         mapHelper.addUserPositionCircle();
         mapHelper.addUserPositionMarker();
         mapHelper.markersLayer.addTo(map);
+        mapHelper.userPositionMarkerLayer.addTo(map);
     },
     addAnchorsCircle: function() {
         mapHelper.radiusCircle
@@ -48,11 +50,12 @@ var mapHelper = {
             .setLatLng(mapHelper.userPosition)
             .bindPopup("You are within " + mapHelper.userRadius + " meters from this point")
             .openPopup()
-        .addTo(mapHelper.markersLayer);
+        .addTo(mapHelper.userPositionMarkerLayer);
     },
     clearAllLayers: function() {
         console.log('All layers cleared!');
         mapHelper.markersLayer.clearLayers();
+        mapHelper.userPositionMarkerLayer.clearLayers();
     },
     getSelectedRadius: function() {
         var radiusSelect = document.getElementById('radius-select');
