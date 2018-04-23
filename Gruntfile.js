@@ -214,6 +214,7 @@ module.exports = function(grunt) {
             tmp: {
                 src: [
                     'node_modules/leaflet/dist/leaflet.js',
+                    'node_modules/leaflet-easybutton/src/easy-button.js',
                     'node_modules/proj4/dist/proj4.js',
                     'node_modules/proj4leaflet/src/proj4leaflet.js',
                     '<%= config.src %>/scripts/api/api.js',
@@ -225,6 +226,7 @@ module.exports = function(grunt) {
             dist: {
                 src: [
                     'node_modules/leaflet/dist/leaflet.js',
+                    'node_modules/leaflet-easybutton/src/easy-button.js',
                     'node_modules/proj4/dist/proj4.js',
                     'node_modules/proj4leaflet/src/proj4leaflet.js',
                     '<%= config.src %>/scripts/api/api.js',
