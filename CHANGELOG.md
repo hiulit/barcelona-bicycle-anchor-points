@@ -4,6 +4,18 @@
 
 * Up to date
 
+## [1.2.0] - 2018-04-23
+
+### Added
+
+* New functionality: Toggle the marker button to see the anchors in a given radius while dragging the map.
+* New npm package `leaflet-easybuttons` for creating buttons.
+
+### Fixed
+
+* `onLocationError()` set the map to the default's position.
+* Added default radius when none is set.
+
 ## [1.1.0] - 2018-04-19
 
 ### Added
