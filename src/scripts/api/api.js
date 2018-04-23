@@ -39,10 +39,14 @@ var mapHelper = {
         apiHelper.getNearestAnchors(mapHelper.userPosition, mapHelper.getSelectedRadius());
     },
     addUserPositionCircle: function() {
-        mapHelper.userPositionCircle
-            .setLatLng(mapHelper.userPosition)
-            .setRadius(mapHelper.userRadius)
-        .addTo(mapHelper.markersLayer);
+        if (mapHelper.userRadius) {
+            mapHelper.userPositionCircle
+                .setLatLng(mapHelper.userPosition)
+                .setRadius(mapHelper.userRadius)
+            .addTo(mapHelper.markersLayer);
+        } else {
+            return;
+        }
     },
     addUserPositionMarker: function() {
         mapHelper.userPositionMarker
