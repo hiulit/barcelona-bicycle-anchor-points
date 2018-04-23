@@ -63,7 +63,11 @@ var mapHelper = {
     },
     getSelectedRadius: function() {
         var radiusSelect = document.getElementById('radius-select');
-        var radius = radiusSelect[radiusSelect.selectedIndex].value;
+        if (radiusSelect) {
+            var radius = radiusSelect[radiusSelect.selectedIndex].value;
+        } else {
+            var radius = mapHelper.userRadius
+        }
         return Number(radius);
     },
     getUserLocation: function() {
