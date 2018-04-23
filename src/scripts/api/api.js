@@ -8,6 +8,7 @@ var defaults = {
 var mapHelper = {
     initialPosition: new L.latLng(defaults.position),
     markersLayer: new L.LayerGroup(),
+    userPositionMarkerLayer: new L.LayerGroup(),
     radiusCircle: new L.circle(),
     radiusOptions: [100, 200, 300],
     userPosition: new L.latLng(defaults.position),
@@ -21,6 +22,7 @@ var mapHelper = {
         mapHelper.addUserPositionCircle();
         mapHelper.addUserPositionMarker();
         mapHelper.markersLayer.addTo(map);
+        mapHelper.userPositionMarkerLayer.addTo(map);
     },
     addAnchorsCircle: function() {
         mapHelper.radiusCircle
@@ -37,10 +39,14 @@ var mapHelper = {
         apiHelper.getNearestAnchors(mapHelper.userPosition, mapHelper.getSelectedRadius());
     },
     addUserPositionCircle: function() {
-        mapHelper.userPositionCircle
-            .setLatLng(mapHelper.userPosition)
-            .setRadius(mapHelper.userRadius)
-        .addTo(mapHelper.markersLayer);
+        if (mapHelper.userRadius) {
+            mapHelper.userPositionCircle
+                .setLatLng(mapHelper.userPosition)
+                .setRadius(mapHelper.userRadius)
+            .addTo(mapHelper.markersLayer);
+        } else {
+            return;
+        }
     },
     addUserPositionMarker: function() {
         mapHelper.userPositionMarker
@@ -48,15 +54,20 @@ var mapHelper = {
             .setLatLng(mapHelper.userPosition)
             .bindPopup("You are within " + mapHelper.userRadius + " meters from this point")
             .openPopup()
-        .addTo(mapHelper.markersLayer);
+        .addTo(mapHelper.userPositionMarkerLayer);
     },
     clearAllLayers: function() {
         console.log('All layers cleared!');
         mapHelper.markersLayer.clearLayers();
+        mapHelper.userPositionMarkerLayer.clearLayers();
     },
     getSelectedRadius: function() {
         var radiusSelect = document.getElementById('radius-select');
-        var radius = radiusSelect[radiusSelect.selectedIndex].value;
+        if (radiusSelect) {
+            var radius = radiusSelect[radiusSelect.selectedIndex].value;
+        } else {
+            var radius = mapHelper.userRadius
+        }
         return Number(radius);
     },
     getUserLocation: function() {
@@ -92,6 +103,9 @@ var mapHelper = {
     onLocationError: function(e) {
         mapHelper.loading(false);
         alert(e.message);
+        mapHelper.userPosition = mapHelper.initialPosition
+        mapHelper.addRadiusAndMarkers();
+        map.setView(mapHelper.userPosition, 16);
     }
 }
 
