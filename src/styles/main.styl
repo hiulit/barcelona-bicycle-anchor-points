@@ -1,4 +1,5 @@
 @import "../../node_modules/leaflet/dist/leaflet.css"
+@import "../../node_modules/leaflet-easybutton/src/easy-button.css"
 
 body
     padding: 0
@@ -8,6 +9,9 @@ html,
 body,
 #map
     height: 100%
+
+button
+    padding: 0
 
 #loading
     height: 100%
@@ -62,6 +66,27 @@ body,
 
     50%
         transform: scale(1)
+
+.icon
+    background-position: center center
+    background-repeat: no-repeat
+    background-size: cover
+    display: inline-block
+    height: 20px
+    left: 50%
+    position: absolute
+    top: 50%
+    transform: translate(-50%, -50%)
+    width: @height
+
+.icon--my-location
+    background-image: url("../assets/ic_my_location_black_24px.svg")
+
+.icon--location
+    background-image: url("../assets/ic_location_on_black_24px.svg")
+
+.icon--back
+    background-image: url("../assets/ic_arrow_back_black_24px.svg")
 
 .leaflet-control-radius-select
     background-color: #fff

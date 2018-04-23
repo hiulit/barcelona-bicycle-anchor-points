@@ -2,6 +2,7 @@
 
 * [initialPosition](#initialposition)
 * [markersLayer](#markerslayer)
+* [userPositionMarkerLayer](#userpositionmarkerlayer)
 * [radiusCircle](#radiuscircle)
 * [radiusOptions](#radiusoptions)
 * [userPosition](#userposition)
@@ -46,9 +47,23 @@ Creates a new layer group object.
 
 http://leafletjs.com/reference-1.2.0.html#layergroup
 
+This layer group is used to store all the markers but the user's position marker.
+
 ### Example
 
 `mapHelper.markersLayer`
+
+## userPositionMarkerLayer
+
+Creates a new layer group object.
+
+http://leafletjs.com/reference-1.2.0.html#layergroup
+
+This layer group is used to store only the user's position marker.
+
+### Example
+
+`mapHelper.userPositionMarkerLayer`
 
 ## radiusCircle
 
