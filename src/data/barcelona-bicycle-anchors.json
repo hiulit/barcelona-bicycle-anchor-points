@@ -483,7 +483,7 @@
                 "ZOOM": "4",
                 "BARRI": "la Font de la Guatlla",
                 "DIST": "Sants-Montjuïc",
-                "CP": "08004"
+                "CP": "08038"
             },
             "geometry": {
                 "type": "Point",
@@ -3129,7 +3129,7 @@
                 "ZOOM": "4",
                 "BARRI": "el Poble Sec",
                 "DIST": "Sants-Montjuïc",
-                "CP": "08004"
+                "CP": "08038"
             },
             "geometry": {
                 "type": "Point",
@@ -4695,7 +4695,7 @@
                 "ZOOM": "4",
                 "BARRI": "la Font de la Guatlla",
                 "DIST": "Sants-Montjuïc",
-                "CP": "08038"
+                "CP": "08004"
             },
             "geometry": {
                 "type": "Point",
@@ -6504,7 +6504,7 @@
                 "ZOOM": "4",
                 "BARRI": "les Corts",
                 "DIST": "Les Corts",
-                "CP": "08014"
+                "CP": "08017"
             },
             "geometry": {
                 "type": "Point",
@@ -8394,7 +8394,7 @@
                 "ZOOM": "4",
                 "BARRI": "Sant Antoni",
                 "DIST": "Eixample",
-                "CP": "08011"
+                "CP": "08015"
             },
             "geometry": {
                 "type": "Point",
@@ -11931,7 +11931,7 @@
                 "ZOOM": "4",
                 "BARRI": "la Dreta de l'Eixample",
                 "DIST": "Eixample",
-                "CP": "08028"
+                "CP": "08037"
             },
             "geometry": {
                 "type": "Point",
@@ -12903,7 +12903,7 @@
                 "ZOOM": "4",
                 "BARRI": "l'Antiga Esquerra de l'Eixample",
                 "DIST": "Eixample",
-                "CP": "08008"
+                "CP": "08036"
             },
             "geometry": {
                 "type": "Point",
@@ -14415,7 +14415,7 @@
                 "ZOOM": "4",
                 "BARRI": "la Dreta de l'Eixample",
                 "DIST": "Eixample",
-                "CP": "08009"
+                "CP": "08007"
             },
             "geometry": {
                 "type": "Point",
@@ -19842,7 +19842,7 @@
                 "ZOOM": "4",
                 "BARRI": "la Dreta de l'Eixample",
                 "DIST": "Eixample",
-                "CP": "08007"
+                "CP": "08008"
             },
             "geometry": {
                 "type": "Point",
@@ -20058,7 +20058,7 @@
                 "ZOOM": "4",
                 "BARRI": "la Nova Esquerra de l'Eixample",
                 "DIST": "Eixample",
-                "CP": "08036"
+                "CP": "08029"
             },
             "geometry": {
                 "type": "Point",
@@ -20436,7 +20436,7 @@
                 "ZOOM": "4",
                 "BARRI": "Sant Antoni",
                 "DIST": "Eixample",
-                "CP": "08011"
+                "CP": "08015"
             },
             "geometry": {
                 "type": "Point",
@@ -24324,7 +24324,7 @@
                 "ZOOM": "4",
                 "BARRI": "Sant Gervasi - la Bonanova",
                 "DIST": "Sarrià-Sant Gervasi",
-                "CP": "08035"
+                "CP": "08017"
             },
             "geometry": {
                 "type": "Point",
@@ -26484,7 +26484,7 @@
                 "ZOOM": "4",
                 "BARRI": "la Vila de Gràcia",
                 "DIST": "Gràcia",
-                "CP": "08023"
+                "CP": "08012"
             },
             "geometry": {
                 "type": "Point",
@@ -30480,7 +30480,7 @@
                 "ZOOM": "4",
                 "BARRI": "Sant Pere, Santa Caterina i la Ribera",
                 "DIST": "Ciutat Vella",
-                "CP": "08018"
+                "CP": "08003"
             },
             "geometry": {
                 "type": "Point",
@@ -34962,7 +34962,7 @@
                 "ZOOM": "4",
                 "BARRI": "la Dreta de l'Eixample",
                 "DIST": "Eixample",
-                "CP": "08028"
+                "CP": "08013"
             },
             "geometry": {
                 "type": "Point",
@@ -46815,7 +46815,7 @@
                 "ZOOM": "4",
                 "BARRI": "Provençals del Poblenou",
                 "DIST": "Sant Martí",
-                "CP": "08018"
+                "CP": "08005"
             },
             "geometry": {
                 "type": "Point",
@@ -47220,7 +47220,7 @@
                 "ZOOM": "4",
                 "BARRI": "el Raval",
                 "DIST": "Ciutat Vella",
-                "CP": "08002"
+                "CP": "08001"
             },
             "geometry": {
                 "type": "Point",
@@ -48570,7 +48570,7 @@
                 "ZOOM": "4",
                 "BARRI": "el Poblenou",
                 "DIST": "Sant Martí",
-                "CP": "08019"
+                "CP": "08005"
             },
             "geometry": {
                 "type": "Point",
@@ -49056,7 +49056,7 @@
                 "ZOOM": "4",
                 "BARRI": "la Dreta de l'Eixample",
                 "DIST": "Eixample",
-                "CP": "08013"
+                "CP": "08009"
             },
             "geometry": {
                 "type": "Point",
@@ -49488,7 +49488,7 @@
                 "ZOOM": "4",
                 "BARRI": "la Guineueta",
                 "DIST": "Nou Barris",
-                "CP": "08016"
+                "CP": "08042"
             },
             "geometry": {
                 "type": "Point",
@@ -49893,7 +49893,7 @@
                 "ZOOM": "4",
                 "BARRI": "la Sagrada Família",
                 "DIST": "Eixample",
-                "CP": "08025"
+                "CP": "08013"
             },
             "geometry": {
                 "type": "Point",
