@@ -4,7 +4,17 @@
 
 * Up to date
 
+## [1.2.2] - 2018-09-03
+
+## Added
+
+* New SVG icons.
+* Updated JSON.
+* Updated dev dependencies.
+
 ## [1.2.1] - 2018-07-02
+
+## Added
 
 * Updated JSON
 
