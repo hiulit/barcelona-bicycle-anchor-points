@@ -186,7 +186,7 @@ var apiHelper = {
                 pointToLayer: function(geoJsonPoint, latlng) {
                     if (position.distanceTo(latlng) < radius) {
                         array.push(latlng);
-                        return L.marker(latlng);
+                        return L.marker(latlng).setIcon(defaultIcon);
                     }
                 },
                 onEachFeature: apiHelper.onEachFeature

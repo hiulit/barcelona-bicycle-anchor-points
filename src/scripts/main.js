@@ -20,13 +20,31 @@ var tileLayerInstance = new L.tileLayer(tileLayerUrl, {
     maxZoom: 20
 });
 
-var UserIcon = L.Icon.Default.extend({
+var leafletDefaultIcon = L.Icon.extend({
     options: {
-        iconUrl: '../../assets/marker-icon-purple.png'
+        iconUrl: '../../assets/marken-icon-default.svg',
+        shadowUrl: '../../assets/marken-icon-shadow.svg',
+        iconSize: [48, 48],
+        shadowSize: [24, 14],
+        iconAnchor: [24, 46],
+        shadowAnchor: [1, 14]
     }
 });
 
-var userIcon = new UserIcon();
+var defaultIcon = new leafletDefaultIcon();
+
+var leafletUserIcon = L.Icon.extend({
+    options: {
+        iconUrl: '../../assets/marken-icon-purple.svg',
+        shadowUrl: '../../assets/marken-icon-shadow.svg',
+        iconSize: [48, 48],
+        shadowSize: [24, 14],
+        iconAnchor: [24, 46],
+        shadowAnchor: [1, 14]
+    }
+});
+
+var userIcon = new leafletUserIcon();
 
 var map = L.map('map', {
     layers: [tileLayerInstance]
