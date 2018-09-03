@@ -22,8 +22,8 @@ var tileLayerInstance = new L.tileLayer(tileLayerUrl, {
 
 var leafletDefaultIcon = L.Icon.extend({
     options: {
-        iconUrl: '../../assets/marken-icon-default.svg',
-        shadowUrl: '../../assets/marken-icon-shadow.svg',
+        iconUrl: '../../assets/marker-icon-default.svg',
+        shadowUrl: '../../assets/marker-icon-shadow.svg',
         iconSize: [48, 48],
         shadowSize: [24, 14],
         iconAnchor: [24, 46],
@@ -35,8 +35,8 @@ var defaultIcon = new leafletDefaultIcon();
 
 var leafletUserIcon = L.Icon.extend({
     options: {
-        iconUrl: '../../assets/marken-icon-purple.svg',
-        shadowUrl: '../../assets/marken-icon-shadow.svg',
+        iconUrl: '../../assets/marker-icon-purple.svg',
+        shadowUrl: '../../assets/marker-icon-shadow.svg',
         iconSize: [48, 48],
         shadowSize: [24, 14],
         iconAnchor: [24, 46],
