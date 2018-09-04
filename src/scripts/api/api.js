@@ -77,7 +77,7 @@ var mapHelper = {
             mapHelper.clearAllLayers();
             mapHelper.loading(true);
             map.locate({
-                maxZoom: 16,
+                maxZoom: 18,
                 setView: true
             });
         }
@@ -105,7 +105,7 @@ var mapHelper = {
         alert(e.message);
         mapHelper.userPosition = mapHelper.initialPosition
         mapHelper.addRadiusAndMarkers();
-        map.setView(mapHelper.userPosition, 16);
+        map.setView(mapHelper.userPosition, 18);
     }
 }
 
