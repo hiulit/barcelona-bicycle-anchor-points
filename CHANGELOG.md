@@ -9,6 +9,7 @@
 ## Added
 
 * New SVG icons.
+* `manifest.json`.
 * Updated JSON.
 * Updated dev dependencies.
 
