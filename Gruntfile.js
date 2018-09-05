@@ -217,7 +217,6 @@ module.exports = function(grunt) {
                     'node_modules/leaflet-easybutton/src/easy-button.js',
                     'node_modules/proj4/dist/proj4.js',
                     'node_modules/proj4leaflet/src/proj4leaflet.js',
-                    '<%= config.src %>/APIKeys.js',
                     '<%= config.src %>/scripts/api/api.js',
                     '<%= config.src %>/scripts/main.js'
                     // '!<%= config.src %>/scripts/unusedFunctions.js'
@@ -230,7 +229,6 @@ module.exports = function(grunt) {
                     'node_modules/leaflet-easybutton/src/easy-button.js',
                     'node_modules/proj4/dist/proj4.js',
                     'node_modules/proj4leaflet/src/proj4leaflet.js',
-                    '<%= config.src %>/APIKeys.js',
                     '<%= config.src %>/scripts/api/api.js',
                     '<%= config.src %>/scripts/main.js'
                     // '!<%= config.src %>/scripts/unusedFunctions.js'
