@@ -45,7 +45,7 @@ Returns a `LatLng` object with coordinates (Barcelona's city center).
 
 Creates a new layer group object.
 
-http://leafletjs.com/reference-1.2.0.html#layergroup
+http://leafletjs.com/reference-1.3.4.html#layergroup
 
 This layer group is used to store all the markers but the user's position marker.
 
@@ -57,7 +57,7 @@ This layer group is used to store all the markers but the user's position marker
 
 Creates a new layer group object.
 
-http://leafletjs.com/reference-1.2.0.html#layergroup
+http://leafletjs.com/reference-1.3.4.html#layergroup
 
 This layer group is used to store only the user's position marker.
 
@@ -69,7 +69,7 @@ This layer group is used to store only the user's position marker.
 
 Creates a new circle object.
 
-http://leafletjs.com/reference-1.2.0.html#circle
+http://leafletjs.com/reference-1.3.4.html#circle
 
 ### Example
 
@@ -119,7 +119,7 @@ Returns a `LatLng` object with coordinates. [initialPosition](#initialposition) 
 
 Creates a new circle object (to be used as radius for the user's position).
 
-http://leafletjs.com/reference-1.2.0.html#circle
+http://leafletjs.com/reference-1.3.4.html#circle
 
 ### Example
 
@@ -129,7 +129,7 @@ http://leafletjs.com/reference-1.2.0.html#circle
 
 Creates a new circle object (to be used as a marker for the user's position).
 
-http://leafletjs.com/reference-1.2.0.html#marker
+http://leafletjs.com/reference-1.3.4.html#marker
 
 ### Example
 
