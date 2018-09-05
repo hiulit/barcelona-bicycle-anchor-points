@@ -34,6 +34,7 @@ module.exports = function(grunt) {
                         src: [
                             'assets/{,*/,**/}*.*',
                             'data/{,*/,**/}*.json',
+                            'manifest.json',
                             '{,*/,**/}*.html',
                             '{,*/,**/}*.{png,ico}'
                             // '!old/{,*/,**/}*.*'
@@ -58,6 +59,7 @@ module.exports = function(grunt) {
                         src: [
                             'assets/{,*/,**/}*.*',
                             'data/{,*/,**/}*.json',
+                            'manifest.json',
                             '{,*/,**/}*.html',
                             '{,*/,**/}*.{png,ico}'
                             // '!old/{,*/,**/}*.*'
