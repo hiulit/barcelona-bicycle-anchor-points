@@ -7,10 +7,12 @@ const progressBar = require('node-progress-3')
 const request = require('request')
 
 let URLArray = [
-    'https://w33.bcn.cat/planolBCN/mapserv.ashx?ccapa=K021&lang=CA&layer=EQUIPS_GUIA&VERSION=1.0.0?&th=4&request=GetFeature&TYPENAME=K021&SERVICE=WFS&maxfeatures=2000&OUTPUTFORMAT=application/json&&bbox=410925.4640611075,4559315.863154193,430493.3433021126,4578883.7423951990',
-    'https://w33.bcn.cat/planolBCN/mapserv.ashx?ccapa=K021&lang=CA&layer=EQUIPS_GUIA&VERSION=1.0.0?&th=4&request=GetFeature&TYPENAME=K021&SERVICE=WFS&maxfeatures=2000&OUTPUTFORMAT=application/json&&bbox=410925.4640611075,4578883.742395198,430493.3433021126,4598451.62163620350',
-    'https://w33.bcn.cat/planolBCN/mapserv.ashx?ccapa=K021&lang=CA&layer=EQUIPS_GUIA&VERSION=1.0.0?&th=4&request=GetFeature&TYPENAME=K021&SERVICE=WFS&maxfeatures=2000&OUTPUTFORMAT=application/json&&bbox=430493.3433021121,4559315.863154193,450061.2225431172,4578883.7423951990',
-    'https://w33.bcn.cat/planolBCN/mapserv.ashx?ccapa=K021&lang=CA&layer=EQUIPS_GUIA&VERSION=1.0.0?&th=4&request=GetFeature&TYPENAME=K021&SERVICE=WFS&maxfeatures=2000&OUTPUTFORMAT=application/json&&bbox=430493.3433021121,4578883.742395198,450061.2225431172,4598451.62163620350'
+    'https://w33.bcn.cat/planolBCN/mapserv.ashx?ccapa=K021&lang=CA&layer=EQUIPS_GUIA&VERSION=1.0.0?&th=4&request=GetFeature&TYPENAME=K021&SERVICE=WFS&maxfeatures=2000&OUTPUTFORMAT=application/json&&bbox=420709.4036816098,4569099.802774696,430493.34330211236,4578883.7423951980',
+    'https://w33.bcn.cat/planolBCN/mapserv.ashx?ccapa=K021&lang=CA&layer=EQUIPS_GUIA&VERSION=1.0.0?&th=4&request=GetFeature&TYPENAME=K021&SERVICE=WFS&maxfeatures=2000&OUTPUTFORMAT=application/json&&bbox=420709.4036816098,4578883.742395198,430493.34330211236,4588667.68201570',
+    'https://w33.bcn.cat/planolBCN/mapserv.ashx?ccapa=K021&lang=CA&layer=EQUIPS_GUIA&VERSION=1.0.0?&th=4&request=GetFeature&TYPENAME=K021&SERVICE=WFS&maxfeatures=2000&OUTPUTFORMAT=application/json&&bbox=420709.4036816098,4588667.6820157,430493.34330211236,4598451.6216362030',
+    'https://w33.bcn.cat/planolBCN/mapserv.ashx?ccapa=K021&lang=CA&layer=EQUIPS_GUIA&VERSION=1.0.0?&th=4&request=GetFeature&TYPENAME=K021&SERVICE=WFS&maxfeatures=2000&OUTPUTFORMAT=application/json&&bbox=430493.3433021121,4569099.802774696,440277.28292261466,4578883.7423951980',
+    'https://w33.bcn.cat/planolBCN/mapserv.ashx?ccapa=K021&lang=CA&layer=EQUIPS_GUIA&VERSION=1.0.0?&th=4&request=GetFeature&TYPENAME=K021&SERVICE=WFS&maxfeatures=2000&OUTPUTFORMAT=application/json&&bbox=430493.3433021121,4578883.742395198,440277.28292261466,4588667.68201570',
+    'https://w33.bcn.cat/planolBCN/mapserv.ashx?ccapa=K021&lang=CA&layer=EQUIPS_GUIA&VERSION=1.0.0?&th=4&request=GetFeature&TYPENAME=K021&SERVICE=WFS&maxfeatures=2000&OUTPUTFORMAT=application/json&&bbox=430493.3433021121,4588667.6820157,440277.28292261466,4598451.6216362030'
 ]
 
 let JSONArray = []
@@ -43,7 +45,7 @@ let q = async.queue(function (task, done) {
 q.drain = function() {
     console.log('Merging JSON ...')
     JSONMerge = merge.all(JSONArray)
-    console.log('\033[1;32mAll JSON merged succesfully!\033[0m')
+    console.log('\033[1;32mAll JSON merged successfully!\033[0m')
 
     fs.writeFile(JSONOutput, JSON.stringify(JSONMerge, null, 4), function(err) {
         if (err) {
