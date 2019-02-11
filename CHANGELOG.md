@@ -4,9 +4,16 @@
 
 * Up to date
 
+## [1.2.3] - 2019-02-11
+
+### Added
+
+* Updated JSON.
+* Updated dev dependencies.
+
 ## [1.2.2] - 2018-09-03
 
-## Added
+### Added
 
 * New SVG icons.
 * `manifest.json`.
@@ -15,7 +22,7 @@
 
 ## [1.2.1] - 2018-07-02
 
-## Added
+### Added
 
 * Updated JSON
 
