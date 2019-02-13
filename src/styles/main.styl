@@ -1,14 +1,50 @@
 @import "../../node_modules/leaflet/dist/leaflet.css"
 @import "../../node_modules/leaflet-easybutton/src/easy-button.css"
 
+html
+    box-sizing: border-box
+
+*,
+*:before,
+*:after
+    box-sizing: inherit
+
 body
-    padding: 0
+    font-family: sans-serif
+    font-size: 12px
+    line-height: 1.2
     margin: 0
+    padding: 0
 
 html,
 body,
 #map
     height: 100%
+
+.main-title
+    background-clip: padding-box
+    background-color: #fff
+    border: 2px solid rgba(#000, 0.2)
+    border-radius: 4px
+    font-size: 20px
+    left: 50%
+    margin: 0
+    padding: 10px
+    position: absolute
+    text-align: center
+    top: 10px
+    transform: translateX(-50%)
+    z-index: 1000
+
+    @media (max-width: 500px)
+        background-color: rgba(#fff, 0.7)
+        border: none
+        border-radius: 0
+        // position: static
+        left: 0
+        top: 0
+        transform: none
+        width: 100%
 
 button
     padding: 0
@@ -23,6 +59,7 @@ button
     visibility: hidden
     width: 100%
     z-index: 9999
+
     &:before
         background-color: #000
         content: ""
@@ -33,6 +70,7 @@ button
         position: absolute
         top: 0
         width: 100%
+
     &.is-visible
         opacity: 1
         visibility: visible
@@ -47,7 +85,7 @@ button
 
 .double-bounce1,
 .double-bounce2
-    animation: bounce 2.0s infinite ease-in-out
+    animation: bounce 2s infinite ease-in-out
     background-color: #fff
     border-radius: 50%
     height: 100%
@@ -58,10 +96,11 @@ button
     width: 100%
 
 .double-bounce2
-    animation-delay: -1.0s
+    animation-delay: -1s
 
 @keyframes bounce
-    0%, 100%
+    0%,
+    100%
         transform: scale(0)
 
     50%
@@ -88,6 +127,11 @@ button
 .icon--back
     background-image: url("../assets/ic_arrow_back_black_24px.svg")
 
+.leaflet-container
+    font-family: sans-serif
+    font-size: 12px
+    line-height: 1.2
+
 .leaflet-control-radius-select
     background-color: #fff
     color: #000
@@ -102,3 +146,22 @@ button
     font-size: 16px
     padding: 4px
     width: 100%
+
+.leaflet-top
+    @media (max-width: 500px)
+        top: 50px
+
+.leaflet-bottom
+    &.leaflet-right
+        @media (max-width: 500px)
+            width: 100%
+
+        .leaflet-control
+            border-top-left-radius: 4px
+            padding: 5px
+
+            @media (max-width: 500px)
+                border-top-left-radius: 0
+                float: none
+                padding: 10px
+                width: 100%

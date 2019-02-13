@@ -4,6 +4,16 @@
 
 * Up to date
 
+## [1.2.4] - 2019-02-13
+
+### Added
+
+* New meta tags
+
+### Fixed
+
+* Mobile styles
+
 ## [1.2.3] - 2019-02-11
 
 ### Added
