@@ -21,6 +21,31 @@ body,
 #map
     height: 100%
 
+.main-title
+    background-clip: padding-box
+    background-color: #fff
+    border: 2px solid rgba(#000, 0.2)
+    border-radius: 4px
+    font-size: 20px
+    left: 50%
+    margin: 0
+    padding: 10px
+    position: absolute
+    text-align: center
+    top: 10px
+    transform: translateX(-50%)
+    z-index: 1000
+
+    @media (max-width: 500px)
+        background-color: rgba(#fff, 0.7)
+        border: none
+        border-radius: 0
+        // position: static
+        left: 0
+        top: 0
+        transform: none
+        width: 100%
+
 button
     padding: 0
 
@@ -121,6 +146,10 @@ button
     font-size: 16px
     padding: 4px
     width: 100%
+
+.leaflet-top
+    @media (max-width: 500px)
+        top: 50px
 
 .leaflet-bottom
     &.leaflet-right
