@@ -11,7 +11,6 @@
 * Updated dev dependencies.
 * Fix autoprefixer browsers list.
 
-
 ## [1.2.4] - 2019-02-13
 
 ### Added
