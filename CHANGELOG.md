@@ -4,6 +4,13 @@
 
 * Up to date
 
+## [1.2.5] - 2019-06-06
+
+### Added
+
+* Updated dev dependencies.
+* Fix autoprefixer browsers list.
+
 ## [1.2.4] - 2019-02-13
 
 ### Added
