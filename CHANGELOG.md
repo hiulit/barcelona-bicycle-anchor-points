@@ -4,6 +4,13 @@
 
 * Up to date
 
+## [1.2.6] - 2020-02-27
+
+### Added
+
+* Updated dev dependencies.
+* Added additional JSON.
+
 ## [1.2.5] - 2019-06-06
 
 ### Added
