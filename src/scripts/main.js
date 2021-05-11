@@ -7,17 +7,20 @@
 
 // window.allowConsole = true;
 
-var tileLayerUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + APIKeys.mapBoxToken;
+var tileLayerUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}';
 
 var tileLayerAttribution = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
     '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
     'Imagery © <a href="http://mapbox.com">Mapbox</a>';
 
 var tileLayerInstance = new L.tileLayer(tileLayerUrl, {
+    accessToken: APIKeys.mapBoxToken,
     attribution: tileLayerAttribution,
     detectRetina: true,
-    id: 'mapbox.streets',
-    maxZoom: 20
+    id: 'mapbox/streets-v11',
+    maxZoom: 20,
+    tileSize: 512,
+    zoomOffset: -1,
 });
 
 var leafletDefaultIcon = L.Icon.extend({
