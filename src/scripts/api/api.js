@@ -15,16 +15,16 @@ var mapHelper = {
     userPositionCircle: new L.circle(),
     userPositionMarker: new L.marker(),
     userRadius: 0,
-    addRadiusAndMarkers: function() {
-        mapHelper.clearAllLayers();
-        mapHelper.addAnchorsCircle();
-        mapHelper.addAnchorsMarkers();
-        mapHelper.addUserPositionCircle();
-        mapHelper.addUserPositionMarker();
-        mapHelper.markersLayer.addTo(map);
-        mapHelper.userPositionMarkerLayer.addTo(map);
+    addRadiusAndMarkers: function () {
+        mapHelper.clearAllLayers()
+        mapHelper.addAnchorsCircle()
+        mapHelper.addAnchorsMarkers()
+        mapHelper.addUserPositionCircle()
+        mapHelper.addUserPositionMarker()
+        mapHelper.markersLayer.addTo(map)
+        mapHelper.userPositionMarkerLayer.addTo(map)
     },
-    addAnchorsCircle: function() {
+    addAnchorsCircle: function () {
         mapHelper.radiusCircle
             .setLatLng(mapHelper.userPosition)
             .setRadius(mapHelper.getSelectedRadius())
@@ -32,172 +32,180 @@ var mapHelper = {
                 fillOpacity: 0.4,
                 opacity: 1,
                 weight: 1
-        }).addTo(mapHelper.markersLayer);
+            })
+            .addTo(mapHelper.markersLayer)
     },
-    addAnchorsMarkers: function() {
-        console.log('Selected radius:', mapHelper.getSelectedRadius());
-        apiHelper.getNearestAnchors(mapHelper.userPosition, mapHelper.getSelectedRadius());
+    addAnchorsMarkers: function () {
+        console.log('Selected radius:', mapHelper.getSelectedRadius())
+        apiHelper.getNearestAnchors(
+            mapHelper.userPosition,
+            mapHelper.getSelectedRadius()
+        )
     },
-    addUserPositionCircle: function() {
+    addUserPositionCircle: function () {
         if (mapHelper.userRadius) {
             mapHelper.userPositionCircle
                 .setLatLng(mapHelper.userPosition)
                 .setRadius(mapHelper.userRadius)
-            .addTo(mapHelper.markersLayer);
+                .addTo(mapHelper.markersLayer)
         } else {
-            return;
+            return
         }
     },
-    addUserPositionMarker: function() {
+    addUserPositionMarker: function () {
         mapHelper.userPositionMarker
             .setIcon(userIcon)
             .setLatLng(mapHelper.userPosition)
-            .bindPopup("You are within " + mapHelper.userRadius + " meters from this point")
+            .bindPopup(
+                'You are within ' +
+                    mapHelper.userRadius +
+                    ' meters from this point'
+            )
             .openPopup()
-        .addTo(mapHelper.userPositionMarkerLayer);
+            .addTo(mapHelper.userPositionMarkerLayer)
     },
-    clearAllLayers: function() {
-        console.log('All layers cleared!');
-        mapHelper.markersLayer.clearLayers();
-        mapHelper.userPositionMarkerLayer.clearLayers();
+    clearAllLayers: function () {
+        console.log('All layers cleared!')
+        mapHelper.markersLayer.clearLayers()
+        mapHelper.userPositionMarkerLayer.clearLayers()
     },
-    getSelectedRadius: function() {
-        var radiusSelect = document.getElementById('radius-select');
+    getSelectedRadius: function () {
+        var radiusSelect = document.getElementById('radius-select')
         if (radiusSelect) {
-            var radius = radiusSelect[radiusSelect.selectedIndex].value;
+            var radius = radiusSelect[radiusSelect.selectedIndex].value
         } else {
             var radius = mapHelper.userRadius
         }
-        return Number(radius);
+        return Number(radius)
     },
-    getUserLocation: function() {
+    getUserLocation: function () {
         if (!navigator.geolocation) {
-            alert('Geolocation is not available!');
+            alert('Geolocation is not available!')
         } else {
-            mapHelper.clearAllLayers();
-            mapHelper.loading(true);
+            mapHelper.clearAllLayers()
+            mapHelper.loading(true)
             map.locate({
                 maxZoom: 18,
                 setView: true
-            });
+            })
         }
     },
-    loading: function(show) {
-        var el = document.getElementById('loading');
+    loading: function (show) {
+        var el = document.getElementById('loading')
         if (show == true) {
-            console.log('Showing loader...');
+            console.log('Showing loader...')
             el.classList.add('is-visible')
         } else if (show == false) {
-            console.log('Loader removed!');
+            console.log('Loader removed!')
             el.classList.remove('is-visible')
         }
     },
-    onLocationFound: function(e) {
-        mapHelper.userPosition = new L.latLng(e.latlng.lat, e.latlng.lng);
-        mapHelper.userRadius = Math.round(e.accuracy / 2);
-        console.log('User\'s position:', mapHelper.userPosition);
-        console.log('User\'s radius:', mapHelper.userRadius);
-        mapHelper.loading(false);
-        mapHelper.addRadiusAndMarkers();
+    onLocationFound: function (e) {
+        mapHelper.userPosition = new L.latLng(e.latlng.lat, e.latlng.lng)
+        mapHelper.userRadius = Math.round(e.accuracy / 2)
+        console.log("User's position:", mapHelper.userPosition)
+        console.log("User's radius:", mapHelper.userRadius)
+        mapHelper.loading(false)
+        mapHelper.addRadiusAndMarkers()
     },
-    onLocationError: function(e) {
-        mapHelper.loading(false);
-        alert(e.message);
+    onLocationError: function (e) {
+        mapHelper.loading(false)
+        alert(e.message)
         mapHelper.userPosition = mapHelper.initialPosition
-        mapHelper.addRadiusAndMarkers();
-        map.setView(mapHelper.userPosition, 18);
+        mapHelper.addRadiusAndMarkers()
+        map.setView(mapHelper.userPosition, 18)
     }
 }
 
 var apiHelper = {
     url: './data/barcelona-bicycle-anchors.json',
-    getJSON: function(url, callback) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", url, true);
+    getJSON: function (url, callback) {
+        var xhr = new XMLHttpRequest()
+        xhr.open('GET', url, true)
         xhr.onload = function (e) {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
-                    var res = xhr.responseText;
-                    callback(JSON.parse(res));
+                    var res = xhr.responseText
+                    callback(JSON.parse(res))
                 } else {
-                    console.error(xhr.statusText);
+                    console.error(xhr.statusText)
                 }
             }
-        };
+        }
         xhr.onerror = function (e) {
-          console.error(xhr.statusText);
-        };
-        xhr.send(null);
+            console.error(xhr.statusText)
+        }
+        xhr.send(null)
     },
-    getFeaturesProperties: function() {
-        apiHelper.getJSON(apiHelper.url, function(data){
-            var array = [];
-            for (var i=0; i<data.features.length; i++) {
-                var keys = Object.keys(data.features[i].properties);
-                for (var j=0; j<keys.length; j++) {
+    getFeaturesProperties: function () {
+        apiHelper.getJSON(apiHelper.url, function (data) {
+            var array = []
+            for (var i = 0; i < data.features.length; i++) {
+                var keys = Object.keys(data.features[i].properties)
+                for (var j = 0; j < keys.length; j++) {
                     if (array.indexOf(keys[j]) == -1) {
-                        array.push(keys[j]);
+                        array.push(keys[j])
                     }
                 }
             }
-            console.log('Feature properties', array);
-            return array;
-        });
+            console.log('Feature properties', array)
+            return array
+        })
     },
-    getFeatureProperty: function(key) {
-        apiHelper.getJSON(apiHelper.url, function(data){
-            var array = [];
-            for (var i=0; i<data.features.length; i++) {
+    getFeatureProperty: function (key) {
+        apiHelper.getJSON(apiHelper.url, function (data) {
+            var array = []
+            for (var i = 0; i < data.features.length; i++) {
                 if (array.indexOf(data.features[i].properties[key]) == -1) {
-                    array.push(data.features[i].properties[key]);
+                    array.push(data.features[i].properties[key])
                 }
             }
-            console.log('Feature property', array);
-            return array;
-        });
+            console.log('Feature property', array)
+            return array
+        })
     },
-    getAnchorsByFeatureProperty: function(key, value) {
-        apiHelper.getJSON(apiHelper.url, function(data){
-            var array = [];
-            mapHelper.clearAllLayers();
+    getAnchorsByFeatureProperty: function (key, value) {
+        apiHelper.getJSON(apiHelper.url, function (data) {
+            var array = []
+            mapHelper.clearAllLayers()
             L.Proj.geoJson(data, {
-                pointToLayer: function(geoJsonPoint, latlng) {
-                    array.push(latlng);
-                    return L.marker(latlng);
+                pointToLayer: function (geoJsonPoint, latlng) {
+                    array.push(latlng)
+                    return L.marker(latlng)
                 },
-                filter: function(geoJsonFeature) {
-                    return geoJsonFeature.properties[key] == value;
+                filter: function (geoJsonFeature) {
+                    return geoJsonFeature.properties[key] == value
                 },
                 onEachFeature: apiHelper.onEachFeature
-            }).addTo(mapHelper.markersLayer);
-            console.log('Anchors by feature property', array);
-            mapHelper.markersLayer.addTo(map);
-        });
+            }).addTo(mapHelper.markersLayer)
+            console.log('Anchors by feature property', array)
+            mapHelper.markersLayer.addTo(map)
+        })
     },
-    getNearestAnchors: function(position, radius) {
+    getNearestAnchors: function (position, radius) {
         if (!position || !radius) {
-            console.log('This function needs the user\'s position and a radius!');
+            console.log("This function needs the user's position and a radius!")
             return
         }
-        position = new L.latLng(position);
-        apiHelper.getJSON(apiHelper.url, function(data){
-            var array = [];
+        position = new L.latLng(position)
+        apiHelper.getJSON(apiHelper.url, function (data) {
+            var array = []
             L.Proj.geoJson(data, {
-                pointToLayer: function(geoJsonPoint, latlng) {
+                pointToLayer: function (geoJsonPoint, latlng) {
                     if (position.distanceTo(latlng) < radius) {
-                        array.push(latlng);
-                        return L.marker(latlng).setIcon(defaultIcon);
+                        array.push(latlng)
+                        return L.marker(latlng).setIcon(defaultIcon)
                     }
                 },
                 onEachFeature: apiHelper.onEachFeature
-            }).addTo(mapHelper.markersLayer);
-            console.log('Nearest anchors:', array);
-            mapHelper.markersLayer.addTo(map);
-        });
+            }).addTo(mapHelper.markersLayer)
+            console.log('Nearest anchors:', array)
+            mapHelper.markersLayer.addTo(map)
+        })
     },
-    onEachFeature: function(feature, layer) {
+    onEachFeature: function (feature, layer) {
         if (feature.properties && feature.properties.NOM_EQUIP) {
-            layer.bindPopup(feature.properties.NOM_EQUIP);
+            layer.bindPopup(feature.properties.NOM_EQUIP)
         }
     }
 }
