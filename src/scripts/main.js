@@ -7,11 +7,13 @@
 
 // window.allowConsole = true;
 
-var tileLayerUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}';
+var tileLayerUrl =
+    'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}'
 
-var tileLayerAttribution = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+var tileLayerAttribution =
+    'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
     '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-    'Imagery © <a href="http://mapbox.com">Mapbox</a>';
+    'Imagery © <a href="http://mapbox.com">Mapbox</a>'
 
 var tileLayerInstance = new L.tileLayer(tileLayerUrl, {
     accessToken: APIKeys.mapBoxToken,
@@ -20,8 +22,8 @@ var tileLayerInstance = new L.tileLayer(tileLayerUrl, {
     id: 'mapbox/streets-v11',
     maxZoom: 20,
     tileSize: 512,
-    zoomOffset: -1,
-});
+    zoomOffset: -1
+})
 
 var leafletDefaultIcon = L.Icon.extend({
     options: {
@@ -32,9 +34,9 @@ var leafletDefaultIcon = L.Icon.extend({
         iconAnchor: [24, 46],
         shadowAnchor: [1, 14]
     }
-});
+})
 
-var defaultIcon = new leafletDefaultIcon();
+var defaultIcon = new leafletDefaultIcon()
 
 var leafletUserIcon = L.Icon.extend({
     options: {
@@ -45,124 +47,139 @@ var leafletUserIcon = L.Icon.extend({
         iconAnchor: [24, 46],
         shadowAnchor: [1, 14]
     }
-});
+})
 
-var userIcon = new leafletUserIcon();
+var userIcon = new leafletUserIcon()
 
 var map = L.map('map', {
     layers: [tileLayerInstance]
-}).setView(mapHelper.userPosition, 12);
+}).setView(mapHelper.userPosition, 12)
 
-proj4.defs("EPSG:25831", "+proj=utm +zone=31 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+proj4.defs(
+    'EPSG:25831',
+    '+proj=utm +zone=31 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'
+)
 
-map.on('locationfound', mapHelper.onLocationFound);
-map.on('locationerror', mapHelper.onLocationError);
+map.on('locationfound', mapHelper.onLocationFound)
+map.on('locationerror', mapHelper.onLocationError)
 
 var mapMoveEndFlag = false
 var mapMoveFlag = false
 
-function toggleMapMove() {
+function toggleMapMove () {
     if (!mapMoveFlag) {
-        return;
-    }
-    else {
-        mapHelper.markersLayer.clearLayers();
-        mapHelper.userPositionMarker.setLatLng(map.getCenter());
+        return
+    } else {
+        mapHelper.markersLayer.clearLayers()
+        mapHelper.userPositionMarker.setLatLng(map.getCenter())
     }
 }
 
-function toggleMapMoveEnd() {
+function toggleMapMoveEnd () {
     if (!mapMoveEndFlag) {
-        return;
-    }
-    else {
-        mapHelper.userPosition = map.getCenter();
-        mapHelper.addRadiusAndMarkers();
+        return
+    } else {
+        mapHelper.userPosition = map.getCenter()
+        mapHelper.addRadiusAndMarkers()
     }
 }
 
 // Creates radius select.
 L.Control.Select = L.Control.extend({
-    onAdd: function(map) {
-        var container = L.DomUtil.create('div',
-                'leaflet-control-radius-select leaflet-bar leaflet-control');
+    onAdd: function (map) {
+        var container = L.DomUtil.create(
+            'div',
+            'leaflet-control-radius-select leaflet-bar leaflet-control'
+        )
 
-        var title = L.DomUtil.create('div', 'leaflet-control-radius-select__title', container);
-        title.textContent = 'Select radius';
+        var title = L.DomUtil.create(
+            'div',
+            'leaflet-control-radius-select__title',
+            container
+        )
+        title.textContent = 'Select radius'
 
-        var select = L.DomUtil.create('select', 'leaflet-control-radius-select__select', container);
-        select.id = 'radius-select';
-        select.name = 'radius-select';
+        var select = L.DomUtil.create(
+            'select',
+            'leaflet-control-radius-select__select',
+            container
+        )
+        select.id = 'radius-select'
+        select.name = 'radius-select'
 
-        for (i=0; i<mapHelper.radiusOptions.length; i++){
+        for (i = 0; i < mapHelper.radiusOptions.length; i++) {
             var option = L.DomUtil.create('option', '', select)
-            option.value = mapHelper.radiusOptions[i];
-            option.text = mapHelper.radiusOptions[i] + ' m';
+            option.value = mapHelper.radiusOptions[i]
+            option.text = mapHelper.radiusOptions[i] + ' m'
         }
 
-        L.DomEvent
-            .addListener(select, 'change', L.DomEvent.stop)
-            .addListener(select, 'change', mapHelper.addRadiusAndMarkers);
-        L.DomEvent.disableClickPropagation(container);
+        L.DomEvent.addListener(select, 'change', L.DomEvent.stop).addListener(
+            select,
+            'change',
+            mapHelper.addRadiusAndMarkers
+        )
+        L.DomEvent.disableClickPropagation(container)
 
-        return container;
+        return container
     },
-    onRemove: function(map) {
+    onRemove: function (map) {
         // Nothing to do here
     }
-});
+})
 
-L.control.select = function(opts) {
-    return new L.Control.Select(opts);
+L.control.select = function (opts) {
+    return new L.Control.Select(opts)
 }
 
-L.control.select({
-    position: 'topright'
-}).addTo(map);
+L.control
+    .select({
+        position: 'topright'
+    })
+    .addTo(map)
 
 var myLocationButton = L.easyButton({
     states: [
         {
             icon: 'icon icon--my-location',
-            onClick: function() {
-                toggleButton.state('toggle-on');
+            onClick: function () {
+                toggleButton.state('toggle-on')
                 mapMoveFlag = false
                 mapMoveEndFlag = false
-                mapHelper.clearAllLayers();
-                mapHelper.getUserLocation();
+                mapHelper.clearAllLayers()
+                mapHelper.getUserLocation()
             }
         }
     ]
-});
-myLocationButton.addTo(map);
+})
+myLocationButton.addTo(map)
 
 // Toggle button
 var toggleButton = L.easyButton({
     states: [
         {
             icon: 'icon icon--location',
-            onClick: function(control) {
-                control.state('toggle-off');
-                mapHelper.userRadius = 0;
-                mapHelper.userPosition = map.getCenter();
-                mapHelper.addRadiusAndMarkers();
-                mapMoveFlag = true;
-                map.on('move', toggleMapMove);
-                mapMoveEndFlag = true;
+            onClick: function (control) {
+                control.state('toggle-off')
+                mapHelper.userRadius = 0
+                mapHelper.userPosition = map.getCenter()
+                mapHelper.addRadiusAndMarkers()
+                mapMoveFlag = true
+                map.on('move', toggleMapMove)
+                mapMoveEndFlag = true
                 map.on('moveend', toggleMapMoveEnd)
             },
             stateName: 'toggle-on'
         },
         {
             icon: 'icon icon--back',
-            onClick: function(control) {
-                control.state('toggle-on');
-                mapMoveFlag = false;
-                mapMoveEndFlag = false;
-                mapHelper.clearAllLayers();
+            onClick: function (control) {
+                control.state('toggle-on')
+                mapMoveFlag = false
+                mapMoveEndFlag = false
+                mapHelper.clearAllLayers()
             },
             stateName: 'toggle-off'
         }
     ]
-});
-toggleButton.addTo(map);
+})
+toggleButton.addTo(map)
