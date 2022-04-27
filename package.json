@@ -36,7 +36,7 @@
     "homepage": "https://github.com/hiulit/barcelona-bicycle-anchor-points",
     "devDependencies": {
         "@lodder/grunt-postcss": "^3.0.1",
-        "async": "^3.2.0",
+        "async": "^3.2.2",
         "autoprefixer": "^10.2.6",
         "connect-livereload": "^0.6.1",
         "deepmerge": "^4.2.2",
