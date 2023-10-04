@@ -57,7 +57,7 @@
         "leaflet-easybutton": "^2.4.0",
         "load-grunt-tasks": "^5.1.0",
         "node-progress-3": "^0.4.3",
-        "postcss": "^8.3.4",
+        "postcss": "^8.4.31",
         "proj4leaflet": "^1.0.2",
         "request": "^2.88.2"
     }
