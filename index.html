@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive map of Barcelona bicycle anchor points">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Barcelona Bicycle Anchor Points</title>
+
+    <meta name="description" content="Find public bicycle anchor points near you in Barcelona!">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="hiulit">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <meta itemprop="name" content="Barcelona Bicycle Anchor Points">
+    <meta itemprop="description" content="Find public bicycle anchor points near you in Barcelona!">
+    <meta itemprop="image" content="https://hiulit.github.io/barcelona-bicycle-anchor-points/dist/assets/preview-image.png">
+
+    <meta property="og:url" content="https://hiulit.github.io/barcelona-bicycle-anchor-points/dist">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Barcelona Bicycle Anchor Points">
+    <meta property="og:description" content="Find public bicycle anchor points near you in Barcelona!">
+    <meta property="og:image"
+        content="https://hiulit.github.io/barcelona-bicycle-anchor-points/dist/assets/preview-image.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Barcelona Bicycle Anchor Points">
+    <meta name="twitter:description" content="Find public bicycle anchor points near you in Barcelona!">
+    <meta name="twitter:image"
+        content="https://hiulit.github.io/barcelona-bicycle-anchor-points/dist/assets/preview-image.png">
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="apple-icon.png">
+
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+
+    <link rel="preconnect" href="https://unpkg.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" media="print"
+        onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css" media="print"
+        onload="this.media='all'">
+    <link rel="stylesheet" href="styles/main.css" media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+        <link rel="stylesheet" href="styles/main.css">
+    </noscript>
+    <style>
+        html {
+            box-sizing: border-box;
+        }
+
+        *,
+        *:before,
+        *:after {
+            box-sizing: inherit;
+        }
+
+        body {
+            font-family: sans-serif;
+            font-size: 12px;
+            line-height: 1.2;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body,
+        #map {
+            height: 100%;
+        }
+
+        .main-title {
+            background-clip: padding-box;
+            background-color: #fff;
+            border: 2px solid rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            font-size: 20px;
+            left: 50%;
+            margin: 0;
+            padding: 10px;
+            position: absolute;
+            text-align: center;
+            top: 10px;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+
+        @media (max-width: 500px) {
+            .main-title {
+                background-color: rgba(255, 255, 255, 0.7);
+                border: none;
+                border-radius: 0;
+                left: 0;
+                top: 0;
+                transform: none;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="loading">
+        <div class="double-bounce-container">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+    <h1 class="main-title">Barcelona Bicycle Anchor Points</h1>
+    <div id="map"></div>
+    <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.15.0/proj4.js"
+        integrity="sha512-zlBm5j/0UjgCzqBVLkATd/2b9Yun4SzATXJ7v1T2KfjmP0iw8FUcG5mPD60SrdxU+tRkACm3IQRq55pEkp9Qow=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/proj4leaflet/1.0.2/proj4leaflet.min.js"
+        integrity="sha512-GsAYl1wxzWW6azVpXkhyYfjMb2LbaOnlrqWMBdAk9xDcilinFvGMN+48Ajp/10u/9lcnh8YyS2CYNgung7ewHg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+    <script defer src="scripts/api/api.js"></script>
+    <script defer src="scripts/main.js"></script>
+</body>
+</html>
