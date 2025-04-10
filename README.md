@@ -1,6 +1,6 @@
 # Barcelona bicycle anchors points
 
-Find public bicycle anchor points near you in Barcelona! [Check it out!](https://hiulit.github.io/barcelona-bicycle-anchor-points/dist/)
+Find public bicycle anchor points near you in Barcelona! [Check it out!](https://hiulit.github.io/barcelona-bicycle-anchor-points/)
 
 ![App example](app-example.png)
 
