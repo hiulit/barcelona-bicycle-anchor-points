@@ -7,6 +7,11 @@
 
 // window.allowConsole = true;
 
+const lang = (navigator.language || navigator.userLanguage).slice(0, 2);
+const t = window.i18n[lang] || window.i18n.en;
+
+document.querySelector(".main-title").textContent = t.title;
+
 var tileLayerUrl = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
 
 var tileLayerAttribution =
@@ -94,7 +99,7 @@ L.Control.Select = L.Control.extend({
             "leaflet-control-radius-select__title",
             container
         );
-        title.textContent = "Select radius";
+        title.textContent = t.selectRadius;
 
         var select = L.DomUtil.create(
             "select",
@@ -103,7 +108,7 @@ L.Control.Select = L.Control.extend({
         );
         select.id = "radius-select";
         select.name = "radius-select";
-        select.title = "Select search radius in meters";
+        select.title = t.radiusTooltip;
         select.setAttribute("aria-label", select.title);
 
         for (i = 0; i < mapHelper.radiusOptions.length; i++) {
@@ -140,7 +145,7 @@ var myLocationButton = L.easyButton({
     states: [
         {
             icon: "icon icon--my-location",
-            title: "Get my location",
+            title: t.getLocation,
             onClick: function () {
                 toggleButton.state("toggle-on");
                 mapMoveFlag = false;
@@ -158,7 +163,7 @@ var toggleButton = L.easyButton({
     states: [
         {
             icon: "icon icon--location",
-            title: "Set my location",
+            title: t.setLocation,
             onClick: function (control) {
                 control.state("toggle-off");
                 mapHelper.userRadius = 0;
@@ -173,7 +178,7 @@ var toggleButton = L.easyButton({
         },
         {
             icon: "icon icon--back",
-            title: "Go back",
+            title: t.goBack,
             onClick: function (control) {
                 control.state("toggle-on");
                 mapMoveFlag = false;
