@@ -23,6 +23,8 @@ See [CONTRIBUTING](/CONTRIBUTING.md).
 
 Me 😛 [@hiulit](https://github.com/hiulit).
 
-## License
+## Licenses
 
-[MIT License](/LICENSE)
+-   Source code [MIT License](/LICENSE).
+-   Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors.
+-   GeoJSON <a href="https://portaldades.ajuntament.barcelona.cat/ca/microdades/6778b87d-da09-4eb8-9504-5c9ae5fbfad9">Open Data BCN</a> <a href="https://creativecommons.org/licenses/by/4.0/">(CC BY 4.0)</a>
